@@ -1,6 +1,5 @@
 import { cn } from "@/lib/cn";
-
-const pad = (n: number) => String(n).padStart(2, "0");
+import { pad2 } from "@/lib/motion";
 
 type SwitcherRailProps = {
   index: number;
@@ -9,10 +8,7 @@ type SwitcherRailProps = {
   className?: string;
 };
 
-/**
- * Carousel chrome shared by the manifesto stats and services testimonials:
- * hairline with progress fill, ← → arrows, zero-padded counter.
- */
+// Carousel chrome shared by the manifesto stats and services testimonials.
 export function SwitcherRail({ index, count, onStep, className }: SwitcherRailProps) {
   return (
     <div className={cn("relative border-t border-hairline-mid", className)}>
@@ -39,7 +35,7 @@ export function SwitcherRail({ index, count, onStep, className }: SwitcherRailPr
           </button>
         </div>
         <div className="font-mono text-mono-sm text-fg-faint">
-          {pad(index + 1)}/{pad(count)}
+          {pad2(index + 1)}/{pad2(count)}
         </div>
       </div>
     </div>

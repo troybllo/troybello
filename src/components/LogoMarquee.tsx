@@ -3,7 +3,6 @@ import { Reveal } from "@/components/Reveal";
 
 const brands = ["Align", "RightFuture", "Metalab", "Supersolid", "OH Studio"];
 
-/** "Brands I've helped" reverse-direction wordmark marquee (README §6). */
 export function LogoMarquee() {
   return (
     <Reveal as="section" className="py-(--sect-sm)">

@@ -1,15 +1,11 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { prefersReducedMotion } from "@/lib/motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Media } from "@/components/Media";
 
-/**
- * 180vh scroll-grow section (README §7): sticky full-viewport inner —
- * "WE CLOSE · [image] · THAT GAP". Scrubbed by scroll: the image scales
- * 0.5→1.85 while the words slide inward from ±7vw.
- */
 export function CloseTheGap() {
   const sectionRef = useRef<HTMLElement>(null);
   const leftRef = useRef<HTMLSpanElement>(null);
@@ -23,7 +19,7 @@ export function CloseTheGap() {
     const img = imgRef.current;
     if (!section || !left || !right || !img) return;
 
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (prefersReducedMotion()) {
       img.style.transform = "scale(1.85)";
       return;
     }
@@ -55,7 +51,13 @@ export function CloseTheGap() {
             WE CLOSE
           </span>
           <div ref={imgRef} className="w-[min(22vw,300px)] shrink-0 will-change-transform">
-            <Media caption="[ signature project ]" aspect="3/4" radius="xs" />
+            <Media
+              src="/media/closegap.jpg"
+              alt="Signature project"
+              aspect="3/4"
+              radius="xs"
+              sizes="300px"
+            />
           </div>
           <span
             ref={rightRef}

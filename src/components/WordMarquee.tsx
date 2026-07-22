@@ -2,7 +2,6 @@ import { MarqueeTrack } from "@/components/MarqueeTrack";
 
 const words = ["Design", "Build", "Ship", "Obsess", "Refine", "Launch"];
 
-/** Editorial word marquee band (README §4): words separated by ✦ marks. */
 export function WordMarquee() {
   return (
     <section className="border-y border-hairline py-9">

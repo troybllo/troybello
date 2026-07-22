@@ -16,11 +16,8 @@ type MediaProps = {
   className?: string;
 };
 
-/**
- * Universal media slot: looping muted video, next/image, or striped
- * placeholder — swap in real assets later with no refactor. Placeholder
- * and caption colors follow the active theme (.theme-dark aware).
- */
+// Renders a looping muted video, a next/image, or a striped placeholder,
+// depending on whether `src` is set and its extension.
 export function Media({
   src,
   alt = "",

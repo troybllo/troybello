@@ -1,14 +1,11 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { prefersReducedMotion } from "@/lib/motion";
 
-/**
- * Gooey halftone background (reverse-engineered from bymonolog.com):
- * a domain-warped sine noise field drives a grid of smooth-min blended
- * dots, with an optional vertical wave modulation. Single-pass raw WebGL2
- * — no three.js. Renders nothing (static fallback) when WebGL2 is
- * unavailable or reduced motion is set.
- */
+// Animated gooey-halftone field in raw WebGL2. A domain-warped sine noise
+// field sets each dot's radius; a smooth-min blend fuses neighbours. Renders
+// nothing when WebGL2 is unavailable or the user prefers reduced motion.
 
 const VERT = `#version 300 es
 in vec2 aPos;
@@ -104,7 +101,7 @@ type HalftoneCanvasProps = {
   gooeyness?: number;
   contrast?: number;
   bias?: number;
-  /** 1 = large dots on high luma inverted, 0 = direct (Monolog hero). */
+  /** 1 = larger dots on lower luma; 0 = larger dots on higher luma. */
   invert?: number;
   waveAmplitude?: number;
   waveFrequency?: number;
@@ -130,7 +127,7 @@ export function HalftoneCanvas({
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (prefersReducedMotion()) return;
     const gl = canvas.getContext("webgl2");
     if (!gl) return;
 
@@ -207,7 +204,7 @@ export function HalftoneCanvas({
       const t = Math.min(Math.max((now - state.revealStart) / 2000, 0), 1);
       state.reveal = 1 - Math.pow(1 - t, 3);
 
-      /* hold-to-intensify, lerped like Monolog */
+      // Hold to intensify: lerp amplitude/speed toward the held target.
       const target = state.holding ? amplitude * 2 : amplitude;
       state.currentAmplitude +=
         (target - state.currentAmplitude) * (1 - Math.pow(1 - 0.03, q));

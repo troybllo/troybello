@@ -1,12 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { prefersReducedMotion } from "@/lib/motion";
 
-/**
- * "Hold to disrupt" chip that follows the cursor inside the footer band
- * (its offset parent). Rests bottom-left until the pointer enters, then
- * trails the cursor. Hidden on touch / reduced motion (stays bottom-left).
- */
+// Follows the cursor within the footer band (its offset parent); rests
+// bottom-center on touch or when the pointer is away.
 export function HoldToDisrupt() {
   const ref = useRef<HTMLSpanElement>(null);
   const [follow, setFollow] = useState(false);
@@ -16,7 +14,7 @@ export function HoldToDisrupt() {
     const band = el?.parentElement;
     if (!el || !band) return;
     if (!window.matchMedia("(pointer:fine)").matches) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (prefersReducedMotion()) return;
 
     const onMove = (e: PointerEvent) => {
       const r = band.getBoundingClientRect();

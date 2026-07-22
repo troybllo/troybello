@@ -1,9 +1,9 @@
 import { cn } from "@/lib/cn";
 
 type KickerProps = {
-  /** Gold accent text (e.g. "(The gap)") vs muted (e.g. "Brands I've helped"). */
+  /** Accent-colored label instead of the muted default. */
   accent?: boolean;
-  /** Leading round dot (e.g. "● What I can help with"). */
+  /** Leading round dot, e.g. "● What I can help with". */
   dot?: boolean;
   className?: string;
   children: React.ReactNode;

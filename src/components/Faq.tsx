@@ -33,11 +33,6 @@ const faqs = [
   },
 ];
 
-/**
- * FAQ (Monolog layout): kicker + portrait/chat block left, heading +
- * accordion right. The open question becomes a light highlight bar;
- * answers animate via grid-template-rows (no max-height hacks).
- */
 export function Faq() {
   const [open, setOpen] = useState(0);
 
@@ -48,10 +43,12 @@ export function Faq() {
           <Kicker dot>FAQs</Kicker>
           <div>
             <Media
-              caption="[ Troy ]"
+              src="/media/faq-troy.jpg"
+              alt="Troy Bello"
               aspect="1/1"
               className="w-[220px]"
               radius="xs"
+              sizes="220px"
             />
             <p className="mt-5 max-w-[20ch] text-body-sm text-fg-muted">
               Got more questions? Chat with me.

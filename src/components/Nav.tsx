@@ -9,13 +9,8 @@ const links = [
   ["Process", "#process"],
 ] as const;
 
-/**
- * Fixed nav in mix-blend-difference: the whole bar composites as a group and
- * inverts against whatever is behind it, so it stays legible over dark and
- * light sections alike (bymonolog.com). White base → white over dark, dark
- * over light. Center links highlight into a filled pill on hover; "Start a
- * project" is a solid button with the arrow in its own chip.
- */
+// mix-blend-difference lets the whole bar composite as a group and invert
+// against whatever scrolls behind it, staying legible over dark and light.
 export function Nav() {
   return (
     <nav className="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-(--space-inline) py-4 text-white mix-blend-difference">

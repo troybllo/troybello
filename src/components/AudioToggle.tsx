@@ -2,11 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 
-/**
- * Sound toggle (Monolog): default off. When on, a short WebAudio "tick"
- * plays on hovering interactive elements (880Hz) and on click (560Hz).
- * AudioContext is created lazily on first interaction — never autoplays.
- */
+// Off by default. When on, plays a short tick on hovering interactive
+// elements and on click. AudioContext is created lazily — never autoplays.
 export function AudioToggle() {
   const [muted, setMuted] = useState(true);
   const ctxRef = useRef<AudioContext | null>(null);

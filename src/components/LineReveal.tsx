@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
 import { cn } from "@/lib/cn";
+import { useInViewOnce } from "@/hooks/useInViewOnce";
 
 type LineRevealProps = {
   as?: React.ElementType;
@@ -12,7 +12,6 @@ type LineRevealProps = {
   className?: string;
 };
 
-/** Masked line reveal: each line rises from translateY(110%) with a stagger. */
 export function LineReveal({
   as: Tag = "h2",
   lines,
@@ -20,23 +19,7 @@ export function LineReveal({
   stagger = 0.09,
   className,
 }: LineRevealProps) {
-  const ref = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          el.classList.add("in");
-          io.disconnect();
-        }
-      },
-      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" },
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
+  const ref = useInViewOnce<HTMLElement>();
 
   return (
     <Tag ref={ref} className={cn("reveal-lines", className)}>

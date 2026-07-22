@@ -1,12 +1,8 @@
 import { HalftoneCanvas } from "@/components/HalftoneCanvas";
 import { HoldToDisrupt } from "@/components/HoldToDisrupt";
 
-/**
- * Footer glitch band: the halftone shader at full contrast — bright greige
- * gooey dot-waves on black (Monolog's footer canvas 1:1). Hold-to-disrupt
- * is built into the canvas (mousedown intensifies the field); the chip
- * follows the cursor across the band.
- */
+// The canvas amplifies its field on pointer-down, so pressing the band
+// "disrupts" it — the HoldToDisrupt chip is the affordance for that.
 export function Footer() {
   return (
     <footer className="relative h-[45vh] min-h-[320px] overflow-hidden">

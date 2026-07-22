@@ -6,12 +6,6 @@ import { ABOUT_EVENT } from "@/lib/about";
 import { getLenis } from "@/lib/lenis";
 import { Media } from "@/components/Media";
 
-/**
- * About slide-over (bymonolog.com): a right-side panel that slides in when
- * "About" is triggered from the nav or footer. Light studio blurb + meta,
- * then a portrait with "listen"/"create" overlays. Closes on Esc, the Close
- * button, or a backdrop click; locks scroll and restores focus.
- */
 export function AboutDrawer() {
   const [mounted, setMounted] = useState(false);
   const [open, setOpen] = useState(false);
@@ -108,11 +102,18 @@ export function AboutDrawer() {
         </div>
 
         <div className="relative">
-          <Media caption="" aspect="16/10" radius="none" className="w-full" />
-          <span className="absolute top-6 left-6 text-[clamp(28px,3vw,44px)] font-medium text-greige-100">
+          <Media
+            src="/media/about-portrait.jpg"
+            alt="Troy Bello"
+            aspect="16/10"
+            radius="none"
+            className="w-full"
+            sizes="(min-width: 640px) 640px, 100vw"
+          />
+          <span className="absolute top-6 left-6 text-[clamp(28px,3vw,44px)] font-medium text-greige-100 mix-blend-difference">
             listen
           </span>
-          <span className="absolute right-6 bottom-6 text-[clamp(28px,3vw,44px)] font-medium text-greige-100">
+          <span className="absolute right-6 bottom-6 text-[clamp(28px,3vw,44px)] font-medium text-greige-100 mix-blend-difference">
             create
           </span>
         </div>

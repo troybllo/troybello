@@ -1,14 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { pad2 } from "@/lib/motion";
 
-const pad = (n: number) => String(n).padStart(2, "0");
-
-/**
- * Fixed section counter (bottom-left): NN / TT of the current section,
- * tracked via IntersectionObserver. mix-blend-difference so it reads over
- * light and dark alike.
- */
 export function SectionCounter() {
   const [index, setIndex] = useState(1);
   const [total, setTotal] = useState(0);
@@ -42,8 +36,8 @@ export function SectionCounter() {
 
   return (
     <div className="pointer-events-none fixed bottom-8 left-(--space-inline) z-40 font-mono text-mono-sm tracking-mono mix-blend-difference">
-      <span className="text-white">{pad(index)}</span>
-      <span className="text-white/50"> / {pad(total)}</span>
+      <span className="text-white">{pad2(index)}</span>
+      <span className="text-white/50"> / {pad2(total)}</span>
     </div>
   );
 }

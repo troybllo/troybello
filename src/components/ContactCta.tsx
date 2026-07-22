@@ -1,23 +1,19 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { prefersReducedMotion } from "@/lib/motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { LineReveal } from "@/components/LineReveal";
 import { Media } from "@/components/Media";
 
-/**
- * Contact CTA (Monolog layout): full-viewport dark stage over a placeholder
- * reel, giant uppercase staggered lines. The "→ PEOPLE" group slides right
- * as the user scrolls through the section.
- */
 export function ContactCta() {
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (prefersReducedMotion()) return;
 
     const mover = section.querySelector("[data-move]");
     if (!mover) return;
@@ -49,12 +45,12 @@ export function ContactCta() {
       id="contact"
       className="relative flex min-h-svh flex-col items-center justify-center overflow-hidden px-(--space-inline) py-(--sect-lg)"
     >
-      {/* background reel placeholder + dark wash */}
       <div className="absolute inset-0" aria-hidden>
         <Media
-          caption="[ studio reel — b/w ]"
+          src="/media/contact-reel.jpg"
           radius="none"
           className="h-full w-full"
+          sizes="100vw"
         />
         <div className="absolute inset-0 bg-black-950/60" />
       </div>

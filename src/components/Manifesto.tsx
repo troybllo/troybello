@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { prefersReducedMotion } from "@/lib/motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SwitcherRail } from "@/components/SwitcherRail";
@@ -8,7 +9,6 @@ import { SwitcherRail } from "@/components/SwitcherRail";
 const MANIFESTO_TEXT =
   "Most people I work with have built something significant — but their website doesn't show it yet. That gap costs more than revenue. It costs the certainty that your brand is finally being understood.";
 
-/* placeholder info until real numbers/awards exist (README §3 stats) */
 const stats = [
   { num: "40+", label: "Projects shipped for founders and creative teams worldwide" },
   { num: "6yr", label: "Freelancing across design, front-end, and full delivery" },
@@ -17,11 +17,6 @@ const stats = [
 
 const words = MANIFESTO_TEXT.split(" ");
 
-/**
- * Hero part two (Monolog manifesto layout): stat switcher left, scroll
- * word-fill paragraph right. Words start dim and fill to full greige
- * left-to-right as the section scrolls through (README §5 math).
- */
 export function Manifesto() {
   const [stat, setStat] = useState(0);
   const paraRef = useRef<HTMLParagraphElement>(null);
@@ -31,7 +26,7 @@ export function Manifesto() {
     if (!para) return;
     const spans = Array.from(para.querySelectorAll<HTMLSpanElement>(".fw"));
 
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (prefersReducedMotion()) {
       spans.forEach((s) => (s.style.color = "rgba(232,232,227,1)"));
       return;
     }

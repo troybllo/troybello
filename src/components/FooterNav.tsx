@@ -47,11 +47,6 @@ function useTorontoClock() {
   return { time, date: `${date} (${offset})` };
 }
 
-/**
- * Footer navigation (Monolog layout): big anchor rows that highlight into
- * a light bar with a → on hover, studio-details/socials columns, and a
- * live Toronto clock in the bottom meta row.
- */
 export function FooterNav() {
   const { time, date } = useTorontoClock();
 

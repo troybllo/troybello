@@ -1,13 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { prefersReducedMotion } from "@/lib/motion";
 import { cn } from "@/lib/cn";
 
-/**
- * Full-screen preloader: counts 0→100, holds briefly, then slides up.
- * Under reduced motion it resolves instantly. Removed from the tree once
- * the slide-up transition ends so it never traps focus or pointer events.
- */
+// Counts to 100, then slides up and unmounts. Instant under reduced motion.
 export function Preloader() {
   const [count, setCount] = useState(0);
   const [done, setDone] = useState(false);
@@ -16,7 +13,7 @@ export function Preloader() {
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reduced = prefersReducedMotion();
 
     if (reduced) {
       const raf = requestAnimationFrame(() => {

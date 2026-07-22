@@ -6,24 +6,22 @@ const steps = [
     n: "01",
     title: "We discover your story",
     desc: "I dig into your brand, surface what makes you irreplaceable, and shape it into sharp positioning and a strategy that connects in seconds.",
+    image: "/media/journey-1.jpg",
   },
   {
     n: "02",
     title: "We design the experience",
     desc: "With the narrative locked, I design and build a site that feels premium, signals credibility, and gives your audience a reason to act.",
+    image: "/media/journey-2.jpg",
   },
   {
     n: "03",
     title: "We ship it into the world",
     desc: "Your site goes live as a long-term asset — turning attention into opportunity and growing with you.",
+    image: "/media/journey-3.jpg",
   },
 ];
 
-/**
- * Project journey (Monolog process layout): giant full-bleed headline,
- * then three flush checkerboard rows — dark text panel left, edge-to-edge
- * media right, no gaps between rows.
- */
 export function ProjectJourney() {
   return (
     <section id="process" className="pt-(--sect-lg)">
@@ -48,10 +46,12 @@ export function ProjectJourney() {
               </div>
             </div>
             <Media
-              caption={`[ Step ${step.n} — in action ]`}
+              src={step.image}
+              alt={step.title}
               aspect="16/10"
               radius="none"
               className="h-full w-full"
+              sizes="(min-width: 1024px) 50vw, 100vw"
             />
           </Reveal>
         ))}

@@ -1,13 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { prefersReducedMotion } from "@/lib/motion";
 import { cn } from "@/lib/cn";
 
-/**
- * Custom cursor (fine pointers only): a small accent dot that follows the
- * mouse and grows over interactive elements. Uses mix-blend-difference so
- * it reads on both light and dark. Never renders on touch devices.
- */
+// A dot that trails the mouse and grows over interactive elements.
+// Fine pointers only; disabled on touch and under reduced motion.
 export function Cursor() {
   const dotRef = useRef<HTMLDivElement>(null);
   const [enabled, setEnabled] = useState(false);
@@ -15,7 +13,7 @@ export function Cursor() {
 
   useEffect(() => {
     const fine = window.matchMedia("(pointer:fine)").matches;
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reduced = prefersReducedMotion();
     if (!fine || reduced) return;
     const raf = requestAnimationFrame(() => setEnabled(true));
     document.documentElement.style.cursor = "none";

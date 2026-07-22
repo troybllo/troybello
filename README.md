@@ -1,37 +1,47 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Troy Bello — Freelance Studio Site
 
-## Getting Started
+A single-page, motion-heavy marketing site built with Next.js (App Router),
+TypeScript, and Tailwind CSS v4. Design reference and copy live in `design/`.
 
-First, run the development server:
+## Getting started
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev      # http://localhost:3000
+npm run build    # production build
+npm run lint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Set the canonical URL for metadata, sitemap, and robots:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+# .env.local
+NEXT_PUBLIC_SITE_URL=https://your-domain.com
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Structure
 
-## Learn More
+- `src/app` — route, layout, global tokens (`globals.css`), metadata, OG image
+- `src/components` — sections and shared primitives
+- `src/lib` — small helpers (Lenis handle, About-drawer event, `cn`)
+- `public/media` — imagery
 
-To learn more about Next.js, take a look at the following resources:
+## Design tokens
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Colors, type scale, spacing, radii, and motion are defined once in
+`globals.css` (`:root` custom properties + Tailwind `@theme`). Sections use
+those tokens only — no ad-hoc values in JSX.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Replacing the imagery
 
-## Deploy on Vercel
+Every image renders through `<Media>`, which accepts a `src` (image or video)
+and falls back to a striped placeholder. The files in `public/media` are
+temporary grayscale placeholders; drop in real assets at the same paths (or
+update the `image` fields in the section data) with no code changes.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Motion & accessibility
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# troybello
+Lenis drives smooth scroll; GSAP ScrollTrigger drives the scroll-linked
+effects; the hero and footer backgrounds are a raw-WebGL2 halftone shader.
+All motion respects `prefers-reduced-motion`, and the custom cursor is
+disabled on touch and fine-pointer-absent devices.

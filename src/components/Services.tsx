@@ -11,30 +11,35 @@ const services = [
   {
     title: "Web Design",
     desc: "Interface and interaction design that signals credibility and gives people one clear reason to lean in.",
+    image: "/media/svc-design.jpg",
   },
   {
     title: "Development",
     desc: "Fast, accessible, hand-built front-ends — pixel-faithful, performant, and easy to maintain.",
+    image: "/media/svc-dev.jpg",
   },
   {
     title: "Website Strategy",
     desc: "Positioning and structure that connects in seconds and turns attention into action.",
+    image: "/media/svc-strategy.jpg",
   },
   {
     title: "Design Systems",
     desc: "Scalable component libraries so your brand stays consistent as it grows.",
+    image: "/media/svc-systems.jpg",
   },
   {
     title: "Shipping & Launch",
     desc: "From staging to production — I handle deployment, QA, and a smooth go-live.",
+    image: "/media/svc-launch.jpg",
   },
   {
     title: "Care & Support",
     desc: "Post-launch support, docs, and training so your team can run the site with confidence.",
+    image: "/media/svc-support.jpg",
   },
 ];
 
-/* placeholder client stories until real ones exist (README §9) */
 const testimonials = [
   {
     quote:
@@ -56,11 +61,6 @@ const testimonials = [
   },
 ];
 
-/**
- * Services (Monolog layout): testimonial rail left, giant stacked hover
- * list center, sticky preview panel right. The active row is full white,
- * the rest sit dim; the panel shows the active service's media + copy.
- */
 export function Services() {
   const [active, setActive] = useState(0);
   const [panelTop, setPanelTop] = useState(0);
@@ -69,7 +69,7 @@ export function Services() {
   const stepStory = (dir: number) =>
     setStory((s) => (s + dir + testimonials.length) % testimonials.length);
 
-  /* the preview panel vertically centers on the active row */
+  // Preview panel tracks the active row's vertical center.
   useEffect(() => {
     const row = rowRefs.current[active];
     if (row) setPanelTop(row.offsetTop + row.offsetHeight / 2);
@@ -78,7 +78,6 @@ export function Services() {
   return (
     <Section id="services" space="lg" hairline={false}>
       <div className="grid grid-cols-1 gap-16 lg:grid-cols-[minmax(260px,340px)_1fr]">
-        {/* testimonial rail — placeholder client stories */}
         <div className="max-w-[340px]">
           <SwitcherRail index={story} count={testimonials.length} onStep={stepStory} />
           <div className="mt-8 font-mono text-mono-xs tracking-mono-md uppercase text-fg-faint">
@@ -100,7 +99,6 @@ export function Services() {
           </div>
         </div>
 
-        {/* stacked hover list + floating preview */}
         <div className="relative">
           <Kicker dot className="mb-9">
             What I can help with
@@ -127,14 +125,18 @@ export function Services() {
             ))}
           </ul>
 
-          {/* floats beside the active row (desktop only) */}
           <div
             className="pointer-events-none absolute right-0 z-10 hidden w-[360px] -translate-y-1/2 motion-safe:transition-[top] motion-safe:duration-(--dur-normal) motion-safe:ease-(--ease-out-expo) lg:block"
             style={{ top: panelTop }}
             aria-live="polite"
           >
             <div className="relative">
-              <Media caption={`[ ${services[active].title} ]`} aspect="3/4" />
+              <Media
+                src={services[active].image}
+                alt={services[active].title}
+                aspect="3/4"
+                sizes="360px"
+              />
               <div className="shimmer rounded-sm" aria-hidden />
             </div>
             <p className="mt-4 text-body-sm text-fg-muted">
