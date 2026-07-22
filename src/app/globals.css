@@ -1,0 +1,431 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   Design tokens — single source of truth (see design/README.md §Design Tokens)
+   --------------------------------------------------------------------------- */
+
+:root {
+  /* palette — Monolog-derived warm greige ramp (bymonolog.com) */
+  --greige-100: #e8e8e3;
+  --greige-200: #ddddd5;
+  --greige-300: #d1d1c7;
+  --greige-400: #bfbfb1;
+  --olive: #8c8c73;
+  --black-950: #080807;
+  --black-900: #181715;
+  --black-700: #393632;
+  --black-500: #524d47;
+  --black-300: #6b645c;
+  --black-100: #938f8a;
+
+  /* semantic — dark theme (default; the site is dark-dominant like Monolog) */
+  --bg: var(--black-950);
+  --bg-raise: var(--black-900);
+  --fg: var(--greige-100);
+  --fg-muted: rgba(232, 232, 227, 0.62);
+  --fg-faint: rgba(232, 232, 227, 0.45);
+  --fg-dim: rgba(232, 232, 227, 0.24);
+  --accent: var(--greige-400);
+  --hairline: rgba(232, 232, 227, 0.12);
+  --hairline-mid: rgba(232, 232, 227, 0.16);
+  --chip: rgba(232, 232, 227, 0.08);
+  --chip-hover: rgba(232, 232, 227, 0.14);
+  --ph-bg: #121110;
+  --ph-stripe: rgba(232, 232, 227, 0.08);
+
+  /* spacing */
+  --space-inline: clamp(20px, 4vw, 40px);
+  --sect-sm: clamp(56px, 7vw, 90px);
+  --sect-md: clamp(70px, 8vw, 110px);
+  --sect-lg: clamp(80px, 10vw, 140px);
+
+  /* motion */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-inout: cubic-bezier(0.76, 0, 0.24, 1);
+  --ease-transition: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 0.3s;
+  --dur-normal: 0.65s;
+  --dur-slow: 1s;
+  --dur-slower: 1.25s;
+}
+
+/* Inverted (light) sections — wrap any block in .theme-light and every
+   semantic token flips; components need no changes. */
+.theme-light {
+  --bg: var(--greige-300);
+  --bg-raise: var(--greige-100);
+  --fg: var(--black-950);
+  --fg-muted: var(--black-500);
+  --fg-faint: var(--black-300);
+  --fg-dim: var(--black-100);
+  --accent: var(--olive);
+  --hairline: var(--greige-400);
+  --hairline-mid: rgba(8, 8, 7, 0.16);
+  --chip: rgba(8, 8, 7, 0.06);
+  --chip-hover: rgba(8, 8, 7, 0.12);
+  --ph-bg: var(--greige-200);
+  --ph-stripe: rgba(8, 8, 7, 0.08);
+  background: var(--bg);
+  color: var(--fg);
+}
+
+@theme inline {
+  --color-*: initial;
+  --color-bg: var(--bg);
+  --color-bg-raise: var(--bg-raise);
+  --color-fg: var(--fg);
+  --color-accent: var(--accent);
+  --color-fg-muted: var(--fg-muted);
+  --color-fg-faint: var(--fg-faint);
+  --color-fg-dim: var(--fg-dim);
+  --color-hairline: var(--hairline);
+  --color-hairline-mid: var(--hairline-mid);
+  --color-chip: var(--chip);
+  --color-chip-hover: var(--chip-hover);
+  --color-greige-100: var(--greige-100);
+  --color-greige-200: var(--greige-200);
+  --color-greige-300: var(--greige-300);
+  --color-greige-400: var(--greige-400);
+  --color-olive: var(--olive);
+  --color-black-950: var(--black-950);
+  --color-black-900: var(--black-900);
+  --color-white: #fff;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  --font-sans: var(--font-geist-sans), sans-serif;
+  --font-mono: var(--font-geist-mono), monospace;
+
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-pill: 100px;
+
+  --tracking-tightest: -0.04em;
+  --tracking-tighter: -0.03em;
+  --tracking-tight: -0.02em;
+  --tracking-snug: -0.01em;
+  --tracking-mono-sm: 0.06em;
+  --tracking-mono: 0.1em;
+  --tracking-mono-md: 0.14em;
+  --tracking-mono-lg: 0.18em;
+
+  --ease-out-expo: var(--ease-out-expo);
+  --ease-inout: var(--ease-inout);
+  --ease-transition: var(--ease-transition);
+
+  /* type roles — size / line-height / tracking / weight bundled per role */
+  --text-display-xl: clamp(44px, 9.5vw, 168px);
+  --text-display-xl--line-height: 0.9;
+  --text-display-xl--letter-spacing: -0.03em;
+  --text-display-xl--font-weight: 700;
+
+  --text-display-lg: clamp(44px, 9vw, 150px);
+  --text-display-lg--line-height: 0.98;
+  --text-display-lg--letter-spacing: -0.03em;
+  --text-display-lg--font-weight: 600;
+
+  --text-display: clamp(40px, 7vw, 116px);
+  --text-display--line-height: 0.88;
+  --text-display--letter-spacing: -0.03em;
+  --text-display--font-weight: 600;
+
+  --text-h1: clamp(30px, 4.6vw, 72px);
+  --text-h1--line-height: 1.02;
+  --text-h1--letter-spacing: -0.02em;
+  --text-h1--font-weight: 600;
+
+  --text-h2: clamp(30px, 4vw, 64px);
+  --text-h2--line-height: 1.1;
+  --text-h2--letter-spacing: -0.02em;
+  --text-h2--font-weight: 600;
+
+  --text-h3: clamp(26px, 3.6vw, 58px);
+  --text-h3--line-height: 1.24;
+  --text-h3--letter-spacing: -0.01em;
+  --text-h3--font-weight: 500;
+
+  --text-h4: clamp(26px, 3vw, 44px);
+  --text-h4--line-height: 1.1;
+  --text-h4--letter-spacing: -0.02em;
+  --text-h4--font-weight: 600;
+
+  --text-h5: clamp(26px, 2.8vw, 40px);
+  --text-h5--line-height: 1.05;
+  --text-h5--letter-spacing: -0.02em;
+  --text-h5--font-weight: 600;
+
+  --text-stat: clamp(44px, 5vw, 76px);
+  --text-stat--line-height: 1;
+  --text-stat--letter-spacing: -0.02em;
+  --text-stat--font-weight: 600;
+
+  --text-lead: clamp(16px, 1.3vw, 21px);
+  --text-lead--line-height: 1.45;
+  --text-lead--letter-spacing: -0.01em;
+  --text-lead--font-weight: 500;
+
+  --text-service: clamp(40px, 6.2vw, 100px);
+  --text-service--line-height: 1.08;
+  --text-service--letter-spacing: -0.02em;
+  --text-service--font-weight: 600;
+
+  --text-manifesto: clamp(30px, 3.8vw, 66px);
+  --text-manifesto--line-height: 1.24;
+  --text-manifesto--letter-spacing: -0.015em;
+  --text-manifesto--font-weight: 500;
+
+  --text-lead-sm: clamp(19px, 1.7vw, 26px);
+  --text-lead-sm--line-height: 1.45;
+  --text-lead-sm--font-weight: 500;
+
+  --text-quote: clamp(18px, 1.5vw, 22px);
+  --text-quote--line-height: 1.4;
+  --text-quote--font-weight: 500;
+
+  --text-faq: clamp(18px, 1.6vw, 23px);
+  --text-faq--line-height: 1.3;
+  --text-faq--font-weight: 500;
+
+  --text-body-lg: 17px;
+  --text-body-lg--line-height: 1.6;
+
+  --text-body: 16px;
+  --text-body--line-height: 1.55;
+
+  --text-body-sm: 15px;
+  --text-body-sm--line-height: 1.45;
+
+  --text-card-title: 22px;
+  --text-card-title--line-height: 1.2;
+  --text-card-title--letter-spacing: -0.01em;
+  --text-card-title--font-weight: 600;
+
+  --text-marquee: clamp(34px, 4vw, 58px);
+  --text-marquee--line-height: 1.1;
+  --text-marquee--font-weight: 500;
+  --text-marquee--letter-spacing: -0.02em;
+
+  --text-logo-mark: clamp(28px, 3vw, 44px);
+  --text-logo-mark--letter-spacing: -0.02em;
+  --text-logo-mark--font-weight: 600;
+
+  --text-mono-md: 13px;
+  --text-mono-md--line-height: 1.5;
+  --text-mono-md--letter-spacing: 0.1em;
+
+  --text-mono: 12px;
+  --text-mono--line-height: 1.5;
+  --text-mono--letter-spacing: 0.14em;
+
+  --text-mono-sm: 11px;
+  --text-mono-sm--line-height: 1.5;
+  --text-mono-sm--letter-spacing: 0.12em;
+
+  --text-mono-xs: 10px;
+  --text-mono-xs--line-height: 1.4;
+  --text-mono-xs--letter-spacing: 0.12em;
+}
+
+/* ---------------------------------------------------------------------------
+   Base
+   --------------------------------------------------------------------------- */
+
+@layer base {
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-sans), sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: var(--fg);
+    color: var(--bg);
+  }
+
+  a {
+    transition: color var(--dur-fast);
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* global film grain — every section, like Monolog. No blend mode:
+     overlay math vanishes on near-black, so plain low-opacity noise.
+     The layer is oversized and jitters between positions for a subtle
+     boiling-static animation. */
+  body::after {
+    content: "";
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    z-index: 80;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.16;
+    pointer-events: none;
+    animation: grain 0.7s steps(1) infinite;
+  }
+}
+
+@keyframes grain {
+  0% {
+    transform: translate(0, 0);
+  }
+  10% {
+    transform: translate(-4%, 3%);
+  }
+  20% {
+    transform: translate(3%, -4%);
+  }
+  30% {
+    transform: translate(-3%, 4%);
+  }
+  40% {
+    transform: translate(4%, -2%);
+  }
+  50% {
+    transform: translate(-4%, -3%);
+  }
+  60% {
+    transform: translate(3%, 4%);
+  }
+  70% {
+    transform: translate(-2%, -4%);
+  }
+  80% {
+    transform: translate(4%, 2%);
+  }
+  90% {
+    transform: translate(-3%, -2%);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+@layer base {
+  @media (prefers-reduced-motion: reduce) {
+    body::after {
+      animation: none;
+    }
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Shared effect classes (used by primitives)
+   --------------------------------------------------------------------------- */
+
+/* striped media placeholder — colors follow the active theme */
+.ph {
+  background-color: var(--ph-bg);
+  background-image: repeating-linear-gradient(
+    135deg,
+    var(--ph-stripe) 0 1px,
+    transparent 1px 11px
+  );
+}
+
+/* grain overlay (feTurbulence data-uri, per design/README.md §Grain texture) */
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.1;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+/* section reveal: fade + rise */
+.reveal {
+  opacity: 0;
+  transform: translateY(34px);
+  transition:
+    opacity var(--dur-slow) var(--ease-out-expo),
+    transform var(--dur-slow) var(--ease-out-expo);
+}
+.reveal.in {
+  opacity: 1;
+  transform: none;
+}
+
+/* masked line reveal */
+.line-mask {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.04em;
+}
+.line-inner {
+  display: block;
+  transform: translateY(110%);
+  transition: transform 1.05s var(--ease-transition);
+}
+.reveal-lines.in .line-inner {
+  transform: none;
+}
+
+/* shimmer sweep for the services preview placeholder */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+.shimmer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    110deg,
+    transparent 30%,
+    rgba(232, 232, 227, 0.08) 50%,
+    transparent 70%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 5s linear infinite;
+}
+
+/* marquee */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee var(--marquee-duration, 26s) linear infinite;
+  will-change: transform;
+}
+.marquee-track[data-direction="reverse"] {
+  animation-direction: reverse;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .line-inner {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .marquee-track,
+  .shimmer {
+    animation: none;
+  }
+}
