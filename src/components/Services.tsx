@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/cn";
-import { Kicker } from "@/components/Kicker";
 import { Media } from "@/components/Media";
 import { Section } from "@/components/Section";
 import { SwitcherRail } from "@/components/SwitcherRail";
@@ -118,9 +117,12 @@ export function Services() {
         </div>
 
         <div className="relative">
-          <Kicker dot className="mb-9">
+          {/* Sans, sentence case and heavier than the mono kickers elsewhere —
+              it heads the biggest type block on the page. */}
+          <div className="mb-10 flex items-center gap-3 text-[clamp(15px,1.15vw,20px)] font-semibold text-fg/75">
+            <span aria-hidden className="size-2 shrink-0 rounded-full bg-current" />
             What I can help with
-          </Kicker>
+          </div>
           <ul>
             {services.map((s, i) => (
               <li key={s.title}>
@@ -133,7 +135,7 @@ export function Services() {
                   onClick={() => setActive(i)}
                   aria-pressed={i === active}
                   className={cn(
-                    "block cursor-pointer py-0.5 text-left text-service transition-colors duration-[450ms] ease-(--ease-out-expo)",
+                    "block cursor-pointer py-0.5 text-left text-service transition-colors duration-[450ms] ease-(--ease-out-expo) wide:text-[length:var(--text-service-3col)]",
                     i === active ? "text-fg" : "text-fg-dim",
                   )}
                 >

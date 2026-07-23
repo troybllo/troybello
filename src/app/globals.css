@@ -33,6 +33,10 @@
   --ph-bg: #121110;
   --ph-stripe: rgba(232, 232, 227, 0.08);
   --focus-ring: var(--greige-100);
+  /* Services type beside the preview column (>=1600px). Narrower track than
+     the stacked layout, so a shallower vw curve — but a higher cap, so wide
+     screens end up with LARGER type than the stacked size, not smaller. */
+  --text-service-3col: clamp(40px, 5.2vw, 140px);
 
   /* spacing */
   --space-inline: clamp(20px, 4vw, 40px);
@@ -74,7 +78,7 @@
 @theme inline {
   /* Named so Tailwind sorts them by width. Arbitrary min-[…] variants are
      emitted before the built-in breakpoints, so `lg` would beat them. */
-  --breakpoint-wide: 1800px;
+  --breakpoint-wide: 1600px;
   --breakpoint-ultra: 2000px;
 
   --color-*: initial;
@@ -490,29 +494,20 @@
   grid-template-columns: 1fr;
   gap: 4rem;
 }
+/* Proportional tracks rather than fixed rails, so the type block sits a
+   consistent ~26% in from the left instead of hugging it. */
 @media (min-width: 1024px) {
   .services-grid {
-    grid-template-columns: minmax(200px, 250px) 1fr;
-    column-gap: 2.5rem;
+    grid-template-columns: minmax(180px, 20%) 1fr;
+    column-gap: clamp(40px, 4vw, 100px);
   }
 }
-@media (min-width: 1280px) {
+/* Three columns once there is room — rail | type | preview, matching the
+   reference split. The type track lands at ~46% of the viewport. */
+@media (min-width: 1600px) {
   .services-grid {
-    column-gap: 3rem;
-  }
-}
-/* Three columns only once the type can stay full size beside a preview. The
-   widest row ("Shipping & Launch") is 8.4em, so at the 112px cap it needs
-   ~941px of track — below this the preview stacks under the active row
-   instead, and the type keeps its full scale either way. */
-@media (min-width: 1800px) {
-  .services-grid {
-    grid-template-columns: minmax(240px, 300px) 1fr 300px;
-  }
-}
-@media (min-width: 2000px) {
-  .services-grid {
-    grid-template-columns: minmax(240px, 300px) 1fr 360px;
+    grid-template-columns: minmax(260px, 21%) 1fr minmax(280px, 19%);
+    column-gap: clamp(64px, 5vw, 120px);
   }
 }
 
