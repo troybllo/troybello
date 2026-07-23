@@ -16,7 +16,6 @@ export function Cursor() {
     const reduced = prefersReducedMotion();
     if (!fine || reduced) return;
     const raf = requestAnimationFrame(() => setEnabled(true));
-    document.documentElement.style.cursor = "none";
 
     const onMove = (e: PointerEvent) => {
       const dot = dotRef.current;
@@ -32,9 +31,20 @@ export function Cursor() {
       cancelAnimationFrame(raf);
       window.removeEventListener("pointermove", onMove);
       window.removeEventListener("pointerover", onOver);
-      document.documentElement.style.cursor = "";
     };
   }, []);
+
+  // Hide the native cursor only once the dot is actually on screen, and give it
+  // back on teardown — otherwise a throw between the two leaves a page with no
+  // cursor at all.
+  useEffect(() => {
+    if (!enabled) return;
+    const root = document.documentElement;
+    root.style.cursor = "none";
+    return () => {
+      root.style.cursor = "";
+    };
+  }, [enabled]);
 
   if (!enabled) return null;
 

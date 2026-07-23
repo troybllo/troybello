@@ -4,7 +4,11 @@ import { useEffect, useRef, useState } from "react";
 import { prefersReducedMotion } from "@/lib/motion";
 import { cn } from "@/lib/cn";
 
-// Counts to 100, then slides up and unmounts. Instant under reduced motion.
+const SEEN_KEY = "preloader-seen";
+
+// Counts to 100, then slides up and unmounts. Instant under reduced motion, and
+// skipped outright once per session — a returning visitor should not sit
+// through the count again on every navigation.
 export function Preloader() {
   const [count, setCount] = useState(0);
   const [done, setDone] = useState(false);
@@ -12,10 +16,12 @@ export function Preloader() {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const seen = sessionStorage.getItem(SEEN_KEY) === "1";
+    sessionStorage.setItem(SEEN_KEY, "1");
     document.body.style.overflow = "hidden";
-    const reduced = prefersReducedMotion();
+    const skip = prefersReducedMotion() || seen;
 
-    if (reduced) {
+    if (skip) {
       const raf = requestAnimationFrame(() => {
         setCount(100);
         setDone(true);

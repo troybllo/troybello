@@ -139,6 +139,26 @@ export function Services() {
                 >
                   {s.title}
                 </button>
+
+                {/* Below lg the floating preview panel is hidden, so the row
+                    carries its own image and copy — otherwise the section is a
+                    bare list of titles on phones and tablets. */}
+                {i === active && (
+                  <div className="mt-4 mb-8 lg:hidden">
+                    <div className="relative max-w-[280px]">
+                      <Media
+                        src={s.image}
+                        alt={s.title}
+                        aspect="3/4"
+                        sizes="280px"
+                      />
+                      <div className="shimmer rounded-sm" aria-hidden />
+                    </div>
+                    <p className="mt-4 max-w-[38ch] text-body-sm text-fg-muted">
+                      {s.desc}
+                    </p>
+                  </div>
+                )}
               </li>
             ))}
           </ul>

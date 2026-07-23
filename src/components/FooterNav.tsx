@@ -117,7 +117,7 @@ export function FooterNav() {
               <a
                 href="https://www.linkedin.com/in/troybello/"
                 target="_blank"
-                rel="noopener"
+                rel="noopener noreferrer"
                 className="hover:text-fg-muted"
               >
                 LinkedIn <span aria-hidden>↗</span>
@@ -125,7 +125,7 @@ export function FooterNav() {
               <a
                 href="https://github.com/troybllo"
                 target="_blank"
-                rel="noopener"
+                rel="noopener noreferrer"
                 className="hover:text-fg-muted"
               >
                 GitHub <span aria-hidden>↗</span>

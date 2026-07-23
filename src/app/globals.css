@@ -32,6 +32,7 @@
   --chip-hover: rgba(232, 232, 227, 0.14);
   --ph-bg: #121110;
   --ph-stripe: rgba(232, 232, 227, 0.08);
+  --focus-ring: var(--greige-100);
 
   /* spacing */
   --space-inline: clamp(20px, 4vw, 40px);
@@ -65,6 +66,7 @@
   --chip-hover: rgba(8, 8, 7, 0.12);
   --ph-bg: var(--greige-200);
   --ph-stripe: rgba(8, 8, 7, 0.08);
+  --focus-ring: var(--black-950);
   background: var(--bg);
   color: var(--fg);
 }
@@ -252,6 +254,15 @@
     transition: color var(--dur-fast);
   }
 
+  /* Keyboard focus. The custom cursor hides the pointer, so this ring is the
+     only positional feedback a keyboard user gets — it must never be removed.
+     :focus-visible keeps it off mouse clicks. */
+  :focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 3px;
+    border-radius: var(--radius-xs);
+  }
+
   p {
     text-wrap: pretty;
   }
@@ -429,11 +440,6 @@
   translate: 2px -2px;
 }
 
-/* the case-study frame is a link — keyboard users need the target too */
-.story-frame:focus-visible {
-  outline: 2px solid var(--fg);
-  outline-offset: 3px;
-}
 
 /* masked line reveal */
 .line-mask {
