@@ -28,6 +28,10 @@ export type Project = {
   tags: ServiceTag[];
   /** Card image on /work. Omit for the striped placeholder. */
   card?: string;
+  /** "contain" for logos / landscape key art that must not be cropped. */
+  cardFit?: "cover" | "contain";
+  /** Background behind a contained card, e.g. to match the artwork. */
+  cardBg?: string;
   /** Backdrop still behind the inset reel on the homepage. */
   still?: string;
   video?: string;
@@ -46,15 +50,17 @@ export const PROJECTS: Project[] = [
     name: "LeadPing",
     desc: "Lead capture and outreach tooling, designed and built end to end.",
     tags: ["Web Design", "Development", "Website Strategy"],
-    // TODO: add /media/work-leadping.jpg and a live URL — the card renders the
-    // striped placeholder until then.
+    card: "/media/leadping.jpg",
+    // TODO: add the live LeadPing URL to make the card a link.
   },
   {
     name: "Align",
     href: "https://www.alignyourstars.com",
     desc: "Brand refresh and website for a team building calm, focused software for modern operators.",
     tags: ["Web Design", "Development", "Website Strategy"],
-    card: "/media/work-align.jpg",
+    card: "/media/align.svg",
+    cardFit: "contain",
+    cardBg: "#0d1a2b",
     still: "/media/work-align.jpg",
     video: "/media/work/align/reel.mp4",
     poster: "/media/work/align/poster.jpg",
@@ -68,7 +74,7 @@ export const PROJECTS: Project[] = [
     href: "https://r-ight-future.vercel.app/",
     desc: "Website and design system for a climate-forward venture studio backing the next wave of founders.",
     tags: ["Web Design", "Development", "Design Systems"],
-    card: "/media/work-rightfuture.jpg",
+    card: "/media/rightfuture.jpg",
     still: "/media/work-rightfuture.jpg",
     video: "/media/work/rightfuture/reel.mp4",
     poster: "/media/work/rightfuture/poster.jpg",
@@ -82,7 +88,9 @@ export const PROJECTS: Project[] = [
     href: "https://metalab-five.vercel.app/",
     desc: "End-to-end site and interaction design for a product studio shipping category-defining work.",
     tags: ["Web Design", "Development", "Website Strategy", "Shipping & Launch"],
-    card: "/media/work-metalab.jpg",
+    card: "/media/metalab.jpg",
+    cardFit: "contain",
+    cardBg: "#0b0b2e",
     still: "/media/work-metalab.jpg",
     video: "/media/work/metalab/reel.mp4",
     poster: "/media/work/metalab/poster.jpg",

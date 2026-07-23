@@ -248,11 +248,22 @@ export function HalftoneCanvas({
       cancelAnimationFrame(state.raf);
     };
 
-    const io = new IntersectionObserver(([entry]) => {
-      state.visible = entry.isIntersecting;
-      if (state.visible && !document.hidden) start();
-      else stop();
-    });
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        state.visible = entry.isIntersecting;
+        if (state.visible && !document.hidden) {
+          // The canvas may have been sized (or resized) while hidden — e.g. the
+          // About drawer lays out its panel off-screen, then slides it in. Sync
+          // the buffer before drawing so it never paints into a stale/zero size.
+          resize();
+          start();
+        } else {
+          stop();
+        }
+      },
+      // Start a beat before it scrolls in, so the footer is never caught blank.
+      { rootMargin: "200px" },
+    );
     io.observe(canvas);
 
     const onVisibility = () => {
@@ -260,6 +271,31 @@ export function HalftoneCanvas({
       else if (state.visible) start();
     };
     document.addEventListener("visibilitychange", onVisibility);
+
+    // Safety net for the first few seconds: IntersectionObserver is flaky at
+    // catching an element that enters via a CSS transform (the About drawer
+    // slides its panel in), so it can miss the reveal and leave the canvas
+    // blank. Poll the real rect briefly until the loop has run once.
+    const onScreen = () => {
+      const r = canvas.getBoundingClientRect();
+      return (
+        r.width > 0 &&
+        r.bottom > 0 &&
+        r.top < window.innerHeight &&
+        r.right > 0 &&
+        r.left < window.innerWidth
+      );
+    };
+    const guard = window.setInterval(() => {
+      if (state.running) return window.clearInterval(guard);
+      if (!document.hidden && onScreen()) {
+        state.visible = true;
+        resize();
+        start();
+        window.clearInterval(guard);
+      }
+    }, 200);
+    window.setTimeout(() => window.clearInterval(guard), 4000);
 
     const down = () => (state.holding = true);
     const up = () => (state.holding = false);
@@ -270,6 +306,7 @@ export function HalftoneCanvas({
 
     return () => {
       stop();
+      window.clearInterval(guard);
       ro.disconnect();
       io.disconnect();
       document.removeEventListener("visibilitychange", onVisibility);

@@ -1,15 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { cn } from "@/lib/cn";
 import { openAbout } from "@/lib/about";
 import { getLenis } from "@/lib/lenis";
 
 const links = [
   ["Work", "/work"],
-  ["Services", "#services"],
-  ["Process", "#process"],
-  ["Contact", "#contact"],
+  ["Services", "/#services"],
+  ["Process", "/#process"],
+  ["Contact", "/#contact"],
 ] as const;
 
 export function MobileMenu() {
@@ -77,14 +78,14 @@ export function MobileMenu() {
             About
           </button>
           {links.map(([label, href]) => (
-            <a
+            <Link
               key={href}
               href={href}
               onClick={() => setOpen(false)}
               className="border-b border-hairline py-4 text-[clamp(32px,9vw,56px)] font-semibold tracking-tight text-white"
             >
               {label}
-            </a>
+            </Link>
           ))}
         </nav>
       </div>

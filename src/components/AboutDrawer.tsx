@@ -170,7 +170,7 @@ export function AboutDrawer() {
             a full-width band here. Falls back to the flat black block when
             WebGL2 is missing or the user prefers reduced motion. */}
         <div
-          className="grain relative overflow-hidden bg-black-950"
+          className="grain relative shrink-0 overflow-hidden bg-black-950"
           style={{ aspectRatio: "16/10" }}
         >
           <HalftoneCanvas

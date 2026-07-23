@@ -1,14 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { Kicker } from "@/components/Kicker";
 import { openAbout } from "@/lib/about";
 
 const navLinks = [
   ["Work", "/work"],
-  ["Services", "#services"],
-  ["Process", "#process"],
-  ["Contact", "#contact"],
+  ["Services", "/#services"],
+  ["Process", "/#process"],
+  ["Contact", "/#contact"],
 ] as const;
 
 function useTorontoClock() {
@@ -76,7 +77,7 @@ export function FooterNav() {
               </li>
               {navLinks.map(([label, href]) => (
                 <li key={href} className="border-b border-hairline">
-                  <a
+                  <Link
                     href={href}
                     className="group flex items-center justify-between py-3 text-[clamp(28px,3vw,48px)] font-semibold tracking-tight transition-colors duration-(--dur-fast) hover:bg-greige-100 hover:px-5 hover:text-black-950"
                   >
@@ -87,7 +88,7 @@ export function FooterNav() {
                     >
                       →
                     </span>
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -141,10 +142,10 @@ export function FooterNav() {
           <div className="text-fg-muted">{date}</div>
         </div>
         <div>
-          <a href="#top" className="hover:text-fg-muted">
+          <Link href="/#top" className="hover:text-fg-muted">
             Back to top <span aria-hidden>↑</span>
-          </a>
-          <div className="text-fg-muted">Booking projects for Q3 &lsquo;2026</div>
+          </Link>
+          <div className="text-fg-muted">Booking projects for Q4 &lsquo;26</div>
         </div>
         <div className="sm:text-right">©2026 Troy Bello</div>
       </div>

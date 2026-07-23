@@ -4,6 +4,7 @@ import { cn } from "@/lib/cn";
 const isVideo = (src: string) => /\.(webm|mp4|mov)(\?|$)/i.test(src);
 // Animated GIFs must bypass the optimizer — it flattens them to a still frame.
 const isGif = (src: string) => /\.gif(\?|$)/i.test(src);
+const isSvg = (src: string) => /\.svg(\?|$)/i.test(src);
 
 type MediaProps = {
   /** Image or video URL. Omit to render the striped placeholder. */
@@ -17,6 +18,10 @@ type MediaProps = {
   aspect?: string;
   radius?: "none" | "xs" | "sm";
   sizes?: string;
+  /** "contain" for logos / art that must not be cropped. */
+  fit?: "cover" | "contain";
+  /** Background behind the image, e.g. for a contained logo. */
+  bg?: string;
   className?: string;
 };
 
@@ -30,6 +35,8 @@ export function Media({
   aspect = "4/5",
   radius = "sm",
   sizes,
+  fit = "cover",
+  bg,
   className,
 }: MediaProps) {
   return (
@@ -41,7 +48,10 @@ export function Media({
         radius === "sm" && "rounded-sm",
         className,
       )}
-      style={aspect ? { aspectRatio: aspect } : undefined}
+      style={{
+        ...(aspect ? { aspectRatio: aspect } : {}),
+        ...(bg ? { backgroundColor: bg } : {}),
+      }}
     >
       {src &&
         (isVideo(src) ? (
@@ -53,7 +63,10 @@ export function Media({
             muted
             playsInline
             preload="none"
-            className="absolute inset-0 size-full object-cover"
+            className={cn(
+              "absolute inset-0 size-full",
+              fit === "contain" ? "object-contain" : "object-cover",
+            )}
           />
         ) : (
           <Image
@@ -61,8 +74,10 @@ export function Media({
             alt={alt}
             fill
             sizes={sizes}
-            unoptimized={isGif(src)}
-            className="object-cover"
+            unoptimized={isGif(src) || isSvg(src)}
+            className={cn(
+              fit === "contain" ? "object-contain p-[12%]" : "object-cover",
+            )}
           />
         ))}
       {caption && (
