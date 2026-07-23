@@ -95,6 +95,7 @@
 
   --font-sans: var(--font-geist-sans), sans-serif;
   --font-mono: var(--font-geist-mono), monospace;
+  --font-display: var(--font-archivo), sans-serif;
 
   --radius-xs: 2px;
   --radius-sm: 4px;
@@ -118,7 +119,9 @@
   --text-display-xl: clamp(44px, 9.5vw, 168px);
   --text-display-xl--line-height: 0.9;
   --text-display-xl--letter-spacing: -0.03em;
-  --text-display-xl--font-weight: 700;
+  /* Monolog's display H2 measures 179.2px / 500 / -0.03em at a 2132px
+     viewport — Animo carries that weight optically, so match the 500. */
+  --text-display-xl--font-weight: 500;
 
   --text-display-lg: clamp(44px, 9vw, 150px);
   --text-display-lg--line-height: 0.98;
@@ -126,7 +129,7 @@
   --text-display-lg--font-weight: 600;
 
   --text-display: clamp(40px, 7vw, 116px);
-  --text-display--line-height: 0.88;
+  --text-display--line-height: 0.9;
   --text-display--letter-spacing: -0.03em;
   --text-display--font-weight: 600;
 
@@ -326,6 +329,14 @@
    Shared effect classes (used by primitives)
    --------------------------------------------------------------------------- */
 
+/* Monolog display face. Their display style is Animo, uppercase, lh .9,
+   tracking -.03em; Archivo at wdth 112 is the closest unlicensed match. */
+.display-face {
+  font-family: var(--font-display);
+  font-variation-settings: "wdth" 112;
+  text-transform: uppercase;
+}
+
 /* striped media placeholder — colors follow the active theme */
 .ph {
   background-color: var(--ph-bg);
@@ -359,6 +370,44 @@
 .reveal.in {
   opacity: 1;
   transform: none;
+}
+
+/* success-story frame: the backdrop still dims and the inset website frame
+   fades + scales in once the pane enters view (see StoryFrame).
+   --story-hold is the beat the bare still gets before the site appears. */
+.story-frame {
+  --story-hold: 0.9s;
+}
+.story-still {
+  filter: brightness(1);
+  transition: filter var(--dur-slow) var(--ease-out-expo);
+  /* Hold the still at full brightness on entry so it reads as a photograph
+     before the site takes over. */
+  transition-delay: var(--story-hold);
+}
+.story-frame.in .story-still {
+  filter: brightness(0.45);
+}
+.story-inset {
+  opacity: 0;
+  transform: scale(0.94);
+  transition:
+    opacity var(--dur-slow) var(--ease-out-expo),
+    transform var(--dur-slow) var(--ease-out-expo);
+  /* Trails the dim slightly so the frame darkens first, then the site arrives. */
+  transition-delay: calc(var(--story-hold) + 0.2s);
+}
+.story-frame.in .story-inset {
+  opacity: 1;
+  transform: none;
+}
+.story-url {
+  opacity: 0;
+  transition: opacity var(--dur-fast) var(--ease-out-expo);
+}
+.story-frame:hover .story-url,
+.story-frame:focus-visible .story-url {
+  opacity: 1;
 }
 
 /* masked line reveal */
@@ -419,9 +468,13 @@
 
 @media (prefers-reduced-motion: reduce) {
   .reveal,
-  .line-inner {
+  .line-inner,
+  .story-inset {
     opacity: 1;
     transform: none;
+    transition: none;
+  }
+  .story-still {
     transition: none;
   }
   .marquee-track,

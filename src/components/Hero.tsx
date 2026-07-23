@@ -46,7 +46,7 @@ export function Hero() {
 
       <div
         aria-hidden
-        className="pointer-events-none absolute bottom-[-1.6vw] left-1/2 z-[1] -translate-x-1/2 text-[18vw] leading-[0.7] font-bold tracking-tightest whitespace-nowrap text-greige-300/90"
+        className="pointer-events-none absolute bottom-[1vh] left-1/2 z-[1] -translate-x-1/2 text-[19vw] leading-[0.8] font-bold tracking-tightest whitespace-nowrap text-greige-300/90"
       >
         TROY BELLO
       </div>

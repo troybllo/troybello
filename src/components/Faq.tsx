@@ -9,7 +9,7 @@ import { Section } from "@/components/Section";
 const faqs = [
   {
     q: "Who actually works on my project?",
-    a: "Me, end to end — strategy, design, and development. You get one point of contact and consistent craft, whatever the scope. For larger builds I bring in a small, hand-picked set of collaborators.",
+    a: "Me, end to end — strategy, design, and development. One point of contact, consistent craft, and no handoffs between people who never spoke to you.",
   },
   {
     q: "How long do projects usually take?",
@@ -29,7 +29,8 @@ const faqs = [
   },
   {
     q: "What's the investment?",
-    a: "Projects start around $8k, with most landing between $12k and $30k depending on scope and complexity. You'll always get a fixed, tailored quote before we begin.",
+    // TODO: link the Fiverr profile here once the URL is confirmed.
+    a: "Every package and price is listed openly on my Fiverr profile — no discovery call required to find out what something costs. Larger or custom builds get a fixed, tailored quote before we begin.",
   },
 ];
 

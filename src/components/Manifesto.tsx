@@ -1,24 +1,26 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { prefersReducedMotion } from "@/lib/motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SwitcherRail } from "@/components/SwitcherRail";
+import { STATS as stats } from "@/lib/about";
+import { useAutoAdvance } from "@/lib/ticker";
 
 const MANIFESTO_TEXT =
-  "Most people I work with have built something significant — but their website doesn't show it yet. That gap costs more than revenue. It costs the certainty that your brand is finally being understood.";
-
-const stats = [
-  { num: "40+", label: "Projects shipped for founders and creative teams worldwide" },
-  { num: "6yr", label: "Freelancing across design, front-end, and full delivery" },
-  { num: "100%", label: "Founder-led — you work directly with me, start to finish" },
-];
+  "Great founders changing the world deserve a presence as powerful as what they’re building. Most founders I work with have built something significant, but their website doesn’t show it yet. That gap costs more than revenue. It costs the certainty that your brand is finally being understood.";
 
 const words = MANIFESTO_TEXT.split(" ");
 
 export function Manifesto() {
-  const [stat, setStat] = useState(0);
+  const {
+    ref: statsRef,
+    index: stat,
+    step,
+    paused,
+    pauseProps,
+  } = useAutoAdvance(stats.length);
   const paraRef = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
@@ -65,9 +67,6 @@ export function Manifesto() {
     return () => st.kill();
   }, []);
 
-  const step = (dir: number) =>
-    setStat((s) => (s + dir + stats.length) % stats.length);
-
   return (
     <section
       id="gap"
@@ -75,9 +74,11 @@ export function Manifesto() {
     >
       <div className="grid w-full grid-cols-1 gap-16 lg:grid-cols-[1fr_1.9fr]">
         {/* stat switcher — placeholder info */}
-        <div>
+        <div ref={statsRef} {...pauseProps}>
           <SwitcherRail index={stat} count={stats.length} onStep={step} />
-          <div className="mt-10" aria-live="polite">
+          {/* Silent while it rotates on its own; announces once the visitor
+              takes over by hovering or tabbing in. */}
+          <div className="mt-10" aria-live={paused ? "polite" : "off"}>
             <div className="text-stat">{stats[stat].num}</div>
             <p className="mt-3 max-w-[30ch] text-body-sm text-fg-muted">
               {stats[stat].label}
@@ -89,7 +90,11 @@ export function Manifesto() {
         <div>
           <p ref={paraRef} className="max-w-[26ch] text-manifesto">
             {words.map((w, i) => (
-              <span key={i} className="fw" style={{ color: "rgba(232,232,227,0.24)" }}>
+              <span
+                key={i}
+                className="fw"
+                style={{ color: "rgba(232,232,227,0.24)" }}
+              >
                 {w}{" "}
               </span>
             ))}

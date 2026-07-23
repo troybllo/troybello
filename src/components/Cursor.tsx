@@ -20,7 +20,8 @@ export function Cursor() {
 
     const onMove = (e: PointerEvent) => {
       const dot = dotRef.current;
-      if (dot) dot.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+      if (dot)
+        dot.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
     };
     const onOver = (e: PointerEvent) => {
       setBig(!!(e.target as Element)?.closest?.("a, button, [data-cursor]"));

@@ -2,7 +2,14 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/cn";
-import { ABOUT_EVENT } from "@/lib/about";
+import {
+  ABOUT_AVAILABILITY,
+  ABOUT_BIO,
+  ABOUT_EVENT,
+  ABOUT_LINKS,
+  ABOUT_META,
+  STATS,
+} from "@/lib/about";
 import { getLenis } from "@/lib/lenis";
 import { Media } from "@/components/Media";
 
@@ -68,8 +75,8 @@ export function AboutDrawer() {
       >
         <div className="flex flex-1 flex-col px-(--space-inline) py-8">
           <div className="flex items-start justify-between">
-            <div className="flex items-center gap-2.5 font-mono text-mono-xs tracking-mono uppercase text-ink/60">
-              <span className="inline-block size-2 rounded-full bg-ink/60" />
+            <div className="flex items-center gap-2.5 font-mono text-mono-xs tracking-mono uppercase text-black-950/60">
+              <span className="inline-block size-2 rounded-full bg-black-950/60" />
               About the studio
             </div>
             <button
@@ -82,22 +89,76 @@ export function AboutDrawer() {
             </button>
           </div>
 
-          <p className="mt-10 max-w-[46ch] text-[clamp(16px,1.3vw,20px)] leading-[1.5]">
-            Hey, I&apos;m Troy. I started freelancing because I watched
-            exceptional founders stay invisible — their presence never catching
-            up to who they&apos;d become despite the scale of their ambition.
-            That gap became an obsession. I&apos;ve spent years breaking down
-            what separates a forgettable digital presence from work that
-            actually moves people, and I bring that to every project I take on.
-            When I work with you, I&apos;m immersed in your story, ruthless about
-            what matters, and built to close the gap between who you are and how
-            the world sees you.
-          </p>
+          <div className="mt-10 max-w-[46ch] space-y-5">
+            {ABOUT_BIO.map((para, i) => (
+              <p
+                key={i}
+                className={
+                  i === 0
+                    ? "text-lead-sm"
+                    : "text-body-lg text-black-950/70"
+                }
+              >
+                {para}
+              </p>
+            ))}
+          </div>
 
-          <div className="mt-auto flex items-center justify-between gap-4 pt-10 font-mono text-mono-xs tracking-mono uppercase text-ink/55">
+          <dl className="mt-10 grid grid-cols-3 gap-6 border-t border-black-950/12 pt-8">
+            {STATS.map((stat) => (
+              <div key={stat.num}>
+                <dt className="sr-only">{stat.label}</dt>
+                <dd>
+                  <span className="block text-[clamp(34px,4vw,52px)] leading-none font-semibold tracking-tight">
+                    {stat.num}
+                  </span>
+                  <span className="mt-3 block text-body-sm text-black-950/60">
+                    {stat.label}
+                  </span>
+                </dd>
+              </div>
+            ))}
+          </dl>
+
+          <div className="mt-10 grid gap-8 border-t border-black-950/12 pt-8 sm:grid-cols-2">
+            <div>
+              <h3 className="font-mono text-mono-xs tracking-mono uppercase text-black-950/55">
+                Get in touch
+              </h3>
+              <ul className="mt-4 space-y-2">
+                {ABOUT_LINKS.map((link) => (
+                  <li key={link.href}>
+                    <a
+                      href={link.href}
+                      target={link.href.startsWith("http") ? "_blank" : undefined}
+                      rel={
+                        link.href.startsWith("http")
+                          ? "noreferrer noopener"
+                          : undefined
+                      }
+                      className="text-body-lg underline decoration-black-950/25 underline-offset-4 hover:decoration-black-950"
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <dl className="space-y-3">
+              {ABOUT_META.map((item) => (
+                <div key={item.label} className="flex gap-3">
+                  <dt className="w-[64px] shrink-0 font-mono text-mono-xs tracking-mono uppercase text-black-950/55">
+                    {item.label}
+                  </dt>
+                  <dd className="text-body-sm">{item.value}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+
+          <div className="mt-auto flex items-center gap-2.5 pt-10 font-mono text-mono-xs tracking-mono uppercase text-black-950/55">
             <span aria-hidden>✦</span>
-            <span>EST 2022</span>
-            <span>Based in Toronto</span>
+            <span>{ABOUT_AVAILABILITY}</span>
           </div>
         </div>
 

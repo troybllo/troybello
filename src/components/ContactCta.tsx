@@ -58,7 +58,7 @@ export function ContactCta() {
       <div className="relative z-[1] w-full">
         <LineReveal
           as="h2"
-          className="mx-auto w-fit text-display font-bold uppercase"
+          className="display-face mx-auto w-fit text-display font-bold"
           lines={[
             <span key="l1">Let&apos;s build</span>,
             <span key="l2" className="block pl-[8vw]">

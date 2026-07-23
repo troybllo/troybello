@@ -6,6 +6,7 @@ import { Kicker } from "@/components/Kicker";
 import { Media } from "@/components/Media";
 import { Section } from "@/components/Section";
 import { SwitcherRail } from "@/components/SwitcherRail";
+import { useAutoAdvance } from "@/lib/ticker";
 
 const services = [
   {
@@ -34,40 +35,46 @@ const services = [
     image: "/media/svc-launch.jpg",
   },
   {
-    title: "Care & Support",
+    title: "3D Development",
     desc: "Post-launch support, docs, and training so your team can run the site with confidence.",
-    image: "/media/svc-support.jpg",
+    image: "/media/svc-3d.jpg",
   },
 ];
 
-const testimonials = [
+// How I work. This replaced three invented client testimonials — if real
+// client quotes arrive, swap them back in here with correct attribution.
+const principles = [
   {
     quote:
-      "Within weeks of launching, we were fielding two or three qualified inquiries a week. The site finally does our work justice.",
-    name: "Client, Align",
-    role: "Founder",
+      "You approve it, then it ships. No handoffs to someone who never spoke to you, and no surprises at launch.",
+    name: "Troy Bello",
+    role: "Toronto",
   },
   {
     quote:
-      "Troy cares about your vision like it's his own. Talented, humble, and relentless about finding the elegant solution.",
-    name: "Client, RightFuture",
-    role: "Creative Director",
+      "I take on a small number of projects at a time. That is the whole reason the work stays sharp and the replies stay fast.",
+    name: "Troy Bello",
+    role: "Toronto",
   },
   {
     quote:
-      "Lead management got dramatically easier after launch — the design is impressive and genuinely stands out.",
-    name: "Client, Metalab",
-    role: "Director",
+      "Strategy, design, and the actual code are one job, not three. Nothing gets lost being thrown over a wall.",
+    name: "Troy Bello",
+    role: "Toronto",
   },
 ];
 
 export function Services() {
   const [active, setActive] = useState(0);
   const [panelTop, setPanelTop] = useState(0);
-  const [story, setStory] = useState(0);
   const rowRefs = useRef<Array<HTMLButtonElement | null>>([]);
-  const stepStory = (dir: number) =>
-    setStory((s) => (s + dir + testimonials.length) % testimonials.length);
+  const {
+    ref: storyRef,
+    index: story,
+    step: stepStory,
+    paused: storyPaused,
+    pauseProps: storyPauseProps,
+  } = useAutoAdvance(principles.length, 7000);
 
   // Preview panel tracks the active row's vertical center.
   useEffect(() => {
@@ -78,22 +85,33 @@ export function Services() {
   return (
     <Section id="services" space="lg" hairline={false}>
       <div className="grid grid-cols-1 gap-16 lg:grid-cols-[minmax(260px,340px)_1fr]">
-        <div className="max-w-[340px]">
-          <SwitcherRail index={story} count={testimonials.length} onStep={stepStory} />
+        <div ref={storyRef} className="max-w-[340px]" {...storyPauseProps}>
+          <SwitcherRail
+            index={story}
+            count={principles.length}
+            onStep={stepStory}
+          />
           <div className="mt-8 font-mono text-mono-xs tracking-mono-md uppercase text-fg-faint">
-            (Real client stories)
+            (How I work)
           </div>
-          <div aria-live="polite">
+          <div aria-live={storyPaused ? "polite" : "off"}>
             <p className="mt-5 text-body-lg font-medium">
-              &ldquo;{testimonials[story].quote}&rdquo;
+              &ldquo;{principles[story].quote}&rdquo;
             </p>
             <div className="mt-8 flex items-center gap-3.5">
-              <div className="ph size-10 shrink-0 rounded-full" aria-hidden />
+              <Media
+                src="/media/faq-troy.jpg"
+                alt=""
+                aspect="1/1"
+                radius="none"
+                className="size-10 shrink-0 rounded-full"
+                sizes="40px"
+              />
               <div className="text-body-sm">
                 <div className="font-medium text-fg-muted">
-                  {testimonials[story].name}
+                  {principles[story].name}
                 </div>
-                <div className="text-fg-faint">{testimonials[story].role}</div>
+                <div className="text-fg-faint">{principles[story].role}</div>
               </div>
             </div>
           </div>

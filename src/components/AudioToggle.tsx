@@ -42,7 +42,8 @@ export function AudioToggle() {
     };
 
     const onOver = (e: PointerEvent) => {
-      if ((e.target as Element)?.closest?.("a, button, [data-cursor]")) tick(880, 0.035);
+      if ((e.target as Element)?.closest?.("a, button, [data-cursor]"))
+        tick(880, 0.035);
     };
     const onClick = () => tick(560, 0.05);
     window.addEventListener("pointerover", onOver);
@@ -59,13 +60,10 @@ export function AudioToggle() {
       onClick={() => setMuted((m) => !m)}
       aria-pressed={!muted}
       aria-label={muted ? "Turn sound on" : "Turn sound off"}
-      className="flex size-9 items-center justify-center rounded-md border border-white/30 text-white transition-colors hover:bg-white/10"
+      className="flex size-9 items-center justify-center bg-black border border-white/30 text-white transition-colors hover:bg-white/10"
     >
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
-        <path
-          d="M4 9v6h4l5 4V5L8 9H4z"
-          fill="currentColor"
-        />
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
+        <path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor" />
         {muted ? (
           <path
             d="M16 9l5 5M21 9l-5 5"

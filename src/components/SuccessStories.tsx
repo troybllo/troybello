@@ -1,30 +1,48 @@
 import { Kicker } from "@/components/Kicker";
-import { Media } from "@/components/Media";
 import { Reveal } from "@/components/Reveal";
 import { Section } from "@/components/Section";
+import { StoryFrame } from "@/components/StoryFrame";
 import { pad2 } from "@/lib/motion";
 
+// Each story pairs a backdrop `still` with the site itself, supplied either as
+// `video` (a looping reel) or `frames` (cross-faded screens) — swap one for the
+// other with no code change. Assets live in /public/media/work/<slug>/; the
+// reels there are web-encoded from the 4K source recordings in /public/media.
+// `insetAspect` matches each recording so object-cover never crops it.
+// TODO: fill in each `href` — panes without one render inert and hide the chip.
+// `metric` describes the scope of the work, not a performance claim. It replaced
+// three invented figures (58% / $2M+ / 3.1x). If real, verifiable results come
+// in, they belong here — otherwise leave these as scope descriptors.
 const stories = [
   {
     name: "Align",
     desc: "Brand refresh and website for a team building calm, focused software for modern operators.",
-    metric: "58%",
-    metricLabel: "Increase in average session duration",
-    image: "/media/work-align.jpg",
+    metric: "Design + Build",
+    metricLabel: "Brand refresh and full site, designed and developed end to end",
+    still: "/media/work-align.jpg",
+    video: "/media/work/align/reel.mp4",
+    poster: "/media/work/align/poster.jpg",
+    insetAspect: "1600/834",
   },
   {
     name: "RightFuture",
     desc: "Website and design system for a climate-forward venture studio backing the next wave of founders.",
-    metric: "$2M+",
-    metricLabel: "In inbound enquiries within 3 months of launch",
-    image: "/media/work-rightfuture.jpg",
+    metric: "Design System",
+    metricLabel: "Website plus a reusable component system built to grow with them",
+    still: "/media/work-rightfuture.jpg",
+    video: "/media/work/rightfuture/reel.mp4",
+    poster: "/media/work/rightfuture/poster.jpg",
+    insetAspect: "1600/842",
   },
   {
     name: "Metalab",
     desc: "End-to-end site and interaction design for a product studio shipping category-defining work.",
-    metric: "3.1x",
-    metricLabel: "Lift in qualified inbound leads",
-    image: "/media/work-metalab.jpg",
+    metric: "End to End",
+    metricLabel: "Site and interaction design, from first strategy call through launch",
+    still: "/media/work-metalab.jpg",
+    video: "/media/work/metalab/reel.mp4",
+    poster: "/media/work/metalab/poster.jpg",
+    insetAspect: "16/9",
   },
 ];
 
@@ -44,12 +62,12 @@ export function SuccessStories() {
               key={story.name}
               className="grid grid-cols-1 items-start gap-10 border-b border-hairline py-16 first:pt-0 lg:grid-cols-[2.2fr_1fr] lg:gap-16"
             >
-              <Media
-                src={story.image}
-                alt={`${story.name} case study`}
-                aspect="3/2"
-                radius="xs"
-                sizes="(min-width: 1024px) 60vw, 100vw"
+              <StoryFrame
+                name={story.name}
+                still={story.still}
+                video={story.video}
+                poster={story.poster}
+                insetAspect={story.insetAspect}
               />
               <div className="lg:pt-4">
                 <div className="flex items-center gap-2 font-mono text-mono-xs uppercase text-fg-muted">

@@ -8,6 +8,7 @@ import { FooterNav } from "@/components/FooterNav";
 import { Hero } from "@/components/Hero";
 import { LogoMarquee } from "@/components/LogoMarquee";
 import { Manifesto } from "@/components/Manifesto";
+import { MobileMenu } from "@/components/MobileMenu";
 import { Nav } from "@/components/Nav";
 import { Preloader } from "@/components/Preloader";
 import { ProjectJourney } from "@/components/ProjectJourney";
@@ -22,6 +23,7 @@ export default function Home() {
       <Preloader />
       <Cursor />
       <Nav />
+      <MobileMenu />
       <AboutDrawer />
       <SectionCounter />
       <main>

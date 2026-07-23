@@ -1,8 +1,19 @@
 import type { Metadata } from "next";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
+import { Archivo } from "next/font/google";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import "./globals.css";
+
+// Display face for the two oversized display roles. Stands in for Animo
+// (bymonolog.com's display font, commercially licensed) — Archivo's width axis
+// gets us the same wide-grotesk proportions at display sizes.
+const archivo = Archivo({
+  subsets: ["latin"],
+  axes: ["wdth"],
+  variable: "--font-archivo",
+  display: "swap",
+});
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://troybello.com";
 const title = "Troy Bello® — Freelance web design & development";
@@ -33,7 +44,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
+    <html
+      lang="en"
+      className={`${GeistSans.variable} ${GeistMono.variable} ${archivo.variable}`}
+    >
       <body>
         <SmoothScroll>{children}</SmoothScroll>
       </body>

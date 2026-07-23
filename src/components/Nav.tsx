@@ -16,9 +16,9 @@ export function Nav() {
     <nav className="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-(--space-inline) py-4 text-white mix-blend-difference">
       <a
         href="#top"
-        className="font-mono text-[14px] font-medium tracking-mono uppercase"
+        className="font-mono text-[30px] font-extrabold tracking-mono uppercase"
       >
-        Troy Bello<span>®</span>
+        BLLO<span>®</span>
       </a>
 
       <div className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-1 text-[18px] font-semibold tracking-snug md:flex">
@@ -33,18 +33,18 @@ export function Nav() {
           <a
             key={href}
             href={href}
-            className="rounded-xs px-2.5 py-1 transition-colors duration-(--dur-fast) hover:bg-white hover:text-black-950"
+            className="px-2.5 py-1 transition-colors duration-(--dur-fast) hover:bg-white hover:text-black-950"
           >
             {label}
           </a>
         ))}
       </div>
 
-      <div className="flex items-center gap-2.5">
+      <div className="hidden items-center gap-2.5 md:flex">
         <AudioToggle />
         <a
           href="#contact"
-          className="flex items-center gap-2.5 rounded-md bg-white py-1.5 pr-1.5 pl-4 text-[16px] font-semibold text-black-950"
+          className="flex items-center gap-2.5  bg-white py-1.5 pr-1.5 pl-4 text-[16px] font-semibold text-black-950"
         >
           Start a project
           <span

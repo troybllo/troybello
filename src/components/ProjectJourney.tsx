@@ -6,19 +6,20 @@ const steps = [
     n: "01",
     title: "We discover your story",
     desc: "I dig into your brand, surface what makes you irreplaceable, and shape it into sharp positioning and a strategy that connects in seconds.",
-    image: "/media/journey-1.jpg",
+    image: "/media/journey/01.mp4",
+    poster: "/media/journey/01-poster.jpg",
   },
   {
     n: "02",
     title: "We design the experience",
     desc: "With the narrative locked, I design and build a site that feels premium, signals credibility, and gives your audience a reason to act.",
-    image: "/media/journey-2.jpg",
+    image: "/media/journey-2.gif",
   },
   {
     n: "03",
     title: "We ship it into the world",
     desc: "Your site goes live as a long-term asset — turning attention into opportunity and growing with you.",
-    image: "/media/journey-3.jpg",
+    image: "/media/journey-3.png",
   },
 ];
 
@@ -47,6 +48,7 @@ export function ProjectJourney() {
             </div>
             <Media
               src={step.image}
+              poster={step.poster}
               alt={step.title}
               aspect="16/10"
               radius="none"
