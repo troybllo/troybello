@@ -38,6 +38,9 @@ export function AwayTitle() {
     };
 
     document.addEventListener("visibilitychange", onVisibility);
+    // Sync once: a tab opened in the background (cmd-click) is already hidden,
+    // and no visibilitychange fires until it is focused.
+    onVisibility();
     return () => {
       stop();
       document.removeEventListener("visibilitychange", onVisibility);

@@ -33,11 +33,6 @@
   --ph-bg: #121110;
   --ph-stripe: rgba(232, 232, 227, 0.08);
   --focus-ring: var(--greige-100);
-  /* The services list gains a preview column at 1600px, so the type has less
-     room there and needs a shallower curve to stay on one line. Applied as a
-     utility on the row itself — @theme inline bakes --text-service in at build
-     time, so a media override on :root would never reach it. */
-  --text-service-3col: clamp(40px, 5.4vw, 112px);
 
   /* spacing */
   --space-inline: clamp(20px, 4vw, 40px);
@@ -79,8 +74,8 @@
 @theme inline {
   /* Named so Tailwind sorts them by width. Arbitrary min-[…] variants are
      emitted before the built-in breakpoints, so `lg` would beat them. */
-  --breakpoint-wide: 1600px;
-  --breakpoint-ultra: 1920px;
+  --breakpoint-wide: 1800px;
+  --breakpoint-ultra: 2000px;
 
   --color-*: initial;
   --color-bg: var(--bg);
@@ -439,6 +434,54 @@
   }
 }
 
+/* Halftone fallback: what renders when WebGL2 is unavailable (Chrome with
+   hardware acceleration disabled has no WebGL at all) or under reduced motion.
+   A drifting two-tone field with a dot screen over it — not the shader, but it
+   keeps the hero, footer and About panel from going flat empty. */
+.halftone-fallback {
+  background-color: var(--halftone-bg, var(--black-950));
+  background-image:
+    radial-gradient(
+      55% 60% at 28% 38%,
+      color-mix(in srgb, var(--halftone-fg, #55524b) 55%, transparent),
+      transparent 72%
+    ),
+    radial-gradient(
+      48% 52% at 74% 64%,
+      color-mix(in srgb, var(--halftone-fg, #55524b) 38%, transparent),
+      transparent 70%
+    );
+  background-size: 160% 160%, 150% 150%;
+  background-position: 0% 50%, 100% 50%;
+  animation: halftone-drift 22s var(--ease-inout) infinite alternate;
+}
+/* dot screen, so it reads as a halftone rather than a plain gradient */
+.halftone-fallback::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(
+    circle at center,
+    var(--halftone-bg, var(--black-950)) 1.1px,
+    transparent 1.2px
+  );
+  background-size: 5px 5px;
+  opacity: 0.55;
+}
+@keyframes halftone-drift {
+  from {
+    background-position: 0% 50%, 100% 50%;
+  }
+  to {
+    background-position: 100% 55%, 0% 45%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .halftone-fallback {
+    animation: none;
+  }
+}
+
 /* Services layout. Written as plain media queries rather than Tailwind
    variants: Tailwind emits its `lg` bucket after arbitrary/custom breakpoints,
    so `lg:grid-cols-*` beat the wider override on source order. */
@@ -458,13 +501,16 @@
     column-gap: 3rem;
   }
 }
-/* wide enough for a third track — the preview stops overlapping the type */
-@media (min-width: 1600px) {
+/* Three columns only once the type can stay full size beside a preview. The
+   widest row ("Shipping & Launch") is 8.4em, so at the 112px cap it needs
+   ~941px of track — below this the preview stacks under the active row
+   instead, and the type keeps its full scale either way. */
+@media (min-width: 1800px) {
   .services-grid {
     grid-template-columns: minmax(240px, 300px) 1fr 300px;
   }
 }
-@media (min-width: 1920px) {
+@media (min-width: 2000px) {
   .services-grid {
     grid-template-columns: minmax(240px, 300px) 1fr 360px;
   }

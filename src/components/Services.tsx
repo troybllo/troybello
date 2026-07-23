@@ -133,7 +133,7 @@ export function Services() {
                   onClick={() => setActive(i)}
                   aria-pressed={i === active}
                   className={cn(
-                    "block cursor-pointer py-0.5 text-left text-service transition-colors duration-[450ms] ease-(--ease-out-expo) wide:text-[length:var(--text-service-3col)]",
+                    "block cursor-pointer py-0.5 text-left text-service transition-colors duration-[450ms] ease-(--ease-out-expo)",
                     i === active ? "text-fg" : "text-fg-dim",
                   )}
                 >
@@ -179,7 +179,7 @@ export function Services() {
                 src={services[active].image}
                 alt={services[active].title}
                 aspect="3/4"
-                sizes="(min-width: 1920px) 360px, 300px"
+                sizes="(min-width: 2000px) 360px, 300px"
               />
               <div className="shimmer rounded-sm" aria-hidden />
             </div>

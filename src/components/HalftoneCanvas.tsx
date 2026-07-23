@@ -1,7 +1,22 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { cn } from "@/lib/cn";
+import { useHydrated } from "@/hooks/useHydrated";
 import { prefersReducedMotion } from "@/lib/motion";
+
+// Probed once per session — creating a context is not free.
+let webgl2: boolean | null = null;
+function supportsWebGL2() {
+  if (webgl2 === null) {
+    try {
+      webgl2 = !!document.createElement("canvas").getContext("webgl2");
+    } catch {
+      webgl2 = false;
+    }
+  }
+  return webgl2;
+}
 
 // Animated gooey-halftone field in raw WebGL2. A domain-warped sine noise
 // field sets each dot's radius; a smooth-min blend fuses neighbours. Renders
@@ -123,11 +138,15 @@ export function HalftoneCanvas({
   className,
 }: HalftoneCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const hydrated = useHydrated();
+  // Reduced motion gets the static gradient; so does any browser without
+  // WebGL2 — Chrome with hardware acceleration off has no WebGL at all, and a
+  // bare canvas would leave the hero, footer and About panel blank.
+  const fallback = hydrated && (prefersReducedMotion() || !supportsWebGL2());
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
-    if (prefersReducedMotion()) return;
+    if (!canvas || fallback) return;
     const gl = canvas.getContext("webgl2");
     if (!gl) return;
 
@@ -260,6 +279,7 @@ export function HalftoneCanvas({
       gl.deleteBuffer(buf);
     };
   }, [
+    fallback,
     bg,
     fg,
     pixelSize,
@@ -272,6 +292,16 @@ export function HalftoneCanvas({
     waveAmplitude,
     waveFrequency,
   ]);
+
+  if (fallback) {
+    return (
+      <div
+        aria-hidden
+        className={cn("halftone-fallback", className)}
+        style={{ "--halftone-fg": fg, "--halftone-bg": bg } as React.CSSProperties}
+      />
+    );
+  }
 
   return <canvas ref={canvasRef} aria-hidden className={className} />;
 }
