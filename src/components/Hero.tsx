@@ -1,5 +1,4 @@
 import { HalftoneCanvas } from "@/components/HalftoneCanvas";
-import { Reveal } from "@/components/Reveal";
 
 export function Hero() {
   return (
@@ -52,20 +51,25 @@ export function Hero() {
       </div>
 
       <div className="relative z-[2] flex max-w-[920px] flex-col items-center text-center">
-        <p className="mb-[22px] font-mono text-mono tracking-mono-lg uppercase text-fg-muted">
+        {/* Staggered so the block swings up in sequence as the curtain lifts. */}
+        <p
+          className="rise-in mb-11 font-mono text-mono tracking-mono-lg uppercase text-fg-muted"
+          style={{ "--rise-delay": "0.05s" } as React.CSSProperties}
+        >
           Freelance web design &amp; development
         </p>
-        <div aria-hidden className="mb-[22px] text-[28px] text-accent">
-          ✦
-        </div>
-        <Reveal as="h1" className="max-w-[34ch] text-lead">
+        <h1
+          className="rise-in max-w-[34ch] text-lead"
+          style={{ "--rise-delay": "0.14s" } as React.CSSProperties}
+        >
           I build change-making websites that finally match what you&apos;ve
           actually built — for founders whose ambition has outgrown their
           presence.
-        </Reveal>
+        </h1>
         <a
           href="#work"
-          className="mt-10 flex items-center gap-2.5 font-mono text-mono tracking-mono-md uppercase text-fg-muted hover:text-fg"
+          className="rise-in mt-10 flex items-center gap-2.5 font-mono text-mono tracking-mono-md uppercase text-fg-muted hover:text-fg"
+          style={{ "--rise-delay": "0.24s" } as React.CSSProperties}
         >
           Scroll to explore <span aria-hidden>↓</span>
         </a>

@@ -9,9 +9,7 @@ export function WordMarquee() {
         {words.map((w) => (
           <span key={w} className="flex items-center gap-14">
             <span className="text-marquee text-fg/85">{w}</span>
-            <span aria-hidden className="text-[22px] text-accent">
-              ✦
-            </span>
+            <span aria-hidden className="size-1.5 shrink-0 bg-accent" />
           </span>
         ))}
       </MarqueeTrack>

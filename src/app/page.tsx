@@ -1,4 +1,5 @@
 import { AboutDrawer } from "@/components/AboutDrawer";
+import { AwayTitle } from "@/components/AwayTitle";
 import { CloseTheGap } from "@/components/CloseTheGap";
 import { ContactCta } from "@/components/ContactCta";
 import { Faq } from "@/components/Faq";
@@ -20,6 +21,7 @@ export default function Home() {
   return (
     <>
       <Preloader />
+      <AwayTitle />
       <Nav />
       <MobileMenu />
       <AboutDrawer />

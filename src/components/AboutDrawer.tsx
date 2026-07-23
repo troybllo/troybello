@@ -161,7 +161,7 @@ export function AboutDrawer() {
           </div>
 
           <div className="mt-auto flex items-center gap-2.5 pt-10 font-mono text-mono-xs tracking-mono uppercase text-black-950/55">
-            <span aria-hidden>✦</span>
+            <span aria-hidden className="size-1.5 rounded-full bg-current opacity-60" />
             <span>{ABOUT_AVAILABILITY}</span>
           </div>
         </div>

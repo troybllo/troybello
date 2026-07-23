@@ -33,6 +33,11 @@
   --ph-bg: #121110;
   --ph-stripe: rgba(232, 232, 227, 0.08);
   --focus-ring: var(--greige-100);
+  /* The services list gains a preview column at 1600px, so the type has less
+     room there and needs a shallower curve to stay on one line. Applied as a
+     utility on the row itself — @theme inline bakes --text-service in at build
+     time, so a media override on :root would never reach it. */
+  --text-service-3col: clamp(40px, 5.4vw, 112px);
 
   /* spacing */
   --space-inline: clamp(20px, 4vw, 40px);
@@ -72,6 +77,11 @@
 }
 
 @theme inline {
+  /* Named so Tailwind sorts them by width. Arbitrary min-[…] variants are
+     emitted before the built-in breakpoints, so `lg` would beat them. */
+  --breakpoint-wide: 1600px;
+  --breakpoint-ultra: 1920px;
+
   --color-*: initial;
   --color-bg: var(--bg);
   --color-bg-raise: var(--bg-raise);
@@ -170,9 +180,9 @@
   --text-lead--letter-spacing: -0.01em;
   --text-lead--font-weight: 500;
 
-  --text-service: clamp(40px, 6.2vw, 100px);
-  --text-service--line-height: 1.08;
-  --text-service--letter-spacing: -0.02em;
+  --text-service: clamp(40px, 7.2vw, 112px);
+  --text-service--line-height: 0.98;
+  --text-service--letter-spacing: -0.03em;
   --text-service--font-weight: 600;
 
   --text-manifesto: clamp(30px, 3.8vw, 66px);
@@ -400,6 +410,64 @@
 .reveal.in {
   opacity: 1;
   transform: none;
+}
+
+/* Intro rise: hero content swings up into place as the preloader lifts.
+   Held down only while the preloader is actually covering the page — if JS
+   never runs, `.rise-in` is simply never hidden, so content cannot get stuck. */
+:root[data-preloading] .rise-in {
+  opacity: 0;
+  translate: 0 clamp(40px, 7vh, 80px);
+}
+.rise-in {
+  transition:
+    opacity 0.9s var(--ease-out-expo),
+    translate 1.15s var(--ease-transition);
+  transition-delay: var(--rise-delay, 0s);
+}
+:root[data-loaded] .rise-in {
+  opacity: 1;
+  translate: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  :root[data-preloading] .rise-in {
+    opacity: 1;
+    translate: none;
+  }
+  .rise-in {
+    transition: none;
+  }
+}
+
+/* Services layout. Written as plain media queries rather than Tailwind
+   variants: Tailwind emits its `lg` bucket after arbitrary/custom breakpoints,
+   so `lg:grid-cols-*` beat the wider override on source order. */
+.services-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 4rem;
+}
+@media (min-width: 1024px) {
+  .services-grid {
+    grid-template-columns: minmax(200px, 250px) 1fr;
+    column-gap: 2.5rem;
+  }
+}
+@media (min-width: 1280px) {
+  .services-grid {
+    column-gap: 3rem;
+  }
+}
+/* wide enough for a third track — the preview stops overlapping the type */
+@media (min-width: 1600px) {
+  .services-grid {
+    grid-template-columns: minmax(240px, 300px) 1fr 300px;
+  }
+}
+@media (min-width: 1920px) {
+  .services-grid {
+    grid-template-columns: minmax(240px, 300px) 1fr 360px;
+  }
 }
 
 /* success-story frame: the backdrop still dims and the inset website frame

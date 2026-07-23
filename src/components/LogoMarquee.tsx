@@ -1,7 +1,7 @@
 import { MarqueeTrack } from "@/components/MarqueeTrack";
 import { Reveal } from "@/components/Reveal";
 
-const brands = ["Align", "RightFuture", "Metalab", "Supersolid", "OH Studio"];
+const brands = ["LeadPing", "Align", "RightFuture", "Metalab"];
 
 export function LogoMarquee() {
   return (

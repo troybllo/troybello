@@ -84,8 +84,8 @@ export function Services() {
 
   return (
     <Section id="services" space="lg" hairline={false}>
-      <div className="grid grid-cols-1 gap-16 lg:grid-cols-[minmax(260px,340px)_1fr]">
-        <div ref={storyRef} className="max-w-[340px]" {...storyPauseProps}>
+      <div className="services-grid">
+        <div ref={storyRef} className="max-w-[300px]" {...storyPauseProps}>
           <SwitcherRail
             index={story}
             count={principles.length}
@@ -133,7 +133,7 @@ export function Services() {
                   onClick={() => setActive(i)}
                   aria-pressed={i === active}
                   className={cn(
-                    "block cursor-pointer py-0.5 text-left text-service transition-colors duration-[450ms] ease-(--ease-out-expo)",
+                    "block cursor-pointer py-0.5 text-left text-service transition-colors duration-[450ms] ease-(--ease-out-expo) wide:text-[length:var(--text-service-3col)]",
                     i === active ? "text-fg" : "text-fg-dim",
                   )}
                 >
@@ -144,7 +144,7 @@ export function Services() {
                     carries its own image and copy — otherwise the section is a
                     bare list of titles on phones and tablets. */}
                 {i === active && (
-                  <div className="mt-4 mb-8 lg:hidden">
+                  <div className="mt-4 mb-8 wide:hidden">
                     <div className="relative max-w-[280px]">
                       <Media
                         src={s.image}
@@ -163,8 +163,14 @@ export function Services() {
             ))}
           </ul>
 
+        </div>
+
+        {/* Its own grid track once the viewport can actually hold three
+            columns. Narrower than that, the preview stacks under the active
+            row — a floating panel there would sit on top of the type. */}
+        <div className="relative hidden wide:block">
           <div
-            className="pointer-events-none absolute right-0 z-10 hidden w-[360px] -translate-y-1/2 motion-safe:transition-[top] motion-safe:duration-(--dur-normal) motion-safe:ease-(--ease-out-expo) lg:block"
+            className="pointer-events-none absolute inset-x-0 z-10 -translate-y-1/2 motion-safe:transition-[top] motion-safe:duration-(--dur-normal) motion-safe:ease-(--ease-out-expo)"
             style={{ top: panelTop }}
             aria-live="polite"
           >
@@ -173,7 +179,7 @@ export function Services() {
                 src={services[active].image}
                 alt={services[active].title}
                 aspect="3/4"
-                sizes="360px"
+                sizes="(min-width: 1920px) 360px, 300px"
               />
               <div className="shimmer rounded-sm" aria-hidden />
             </div>

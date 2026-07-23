@@ -1,10 +1,17 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { prefersReducedMotion } from "@/lib/motion";
 import { cn } from "@/lib/cn";
 
 const SEEN_KEY = "preloader-seen";
+
+// Flips <html data-loaded>, which releases the hero's rise-in transition.
+const markLoaded = () => {
+  const root = document.documentElement;
+  root.removeAttribute("data-preloading");
+  root.setAttribute("data-loaded", "");
+};
 
 // Counts to 100, then slides up and unmounts. Instant under reduced motion, and
 // skipped outright once per session — a returning visitor should not sit
@@ -14,6 +21,12 @@ export function Preloader() {
   const [done, setDone] = useState(false);
   const [gone, setGone] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+
+  // Layout effect so the hold is in place before the browser paints.
+  useLayoutEffect(() => {
+    if (!document.documentElement.hasAttribute("data-loaded"))
+      document.documentElement.setAttribute("data-preloading", "");
+  }, []);
 
   useEffect(() => {
     const seen = sessionStorage.getItem(SEEN_KEY) === "1";
@@ -26,6 +39,7 @@ export function Preloader() {
         setCount(100);
         setDone(true);
         setGone(true);
+        markLoaded();
       });
       return () => {
         cancelAnimationFrame(raf);
@@ -39,7 +53,10 @@ export function Preloader() {
       if (n >= 100) {
         n = 100;
         clearInterval(interval);
-        setTimeout(() => setDone(true), 380);
+        setTimeout(() => {
+          setDone(true);
+          markLoaded();
+        }, 380);
       }
       setCount(n);
     }, 90);
