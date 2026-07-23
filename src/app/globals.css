@@ -254,6 +254,26 @@
     transition: color var(--dur-fast);
   }
 
+  /* Skip link: the first thing in the tab order, visible only when focused.
+     The fixed nav plus twelve sections is a long way to tab past otherwise. */
+  .skip-link {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10000;
+    translate: 0 -120%;
+    border-radius: var(--radius-xs);
+    background: var(--greige-100);
+    padding: 0.75rem 1.25rem;
+    color: var(--black-950);
+    font-size: var(--text-body-sm);
+    font-weight: 500;
+    transition: translate var(--dur-fast) var(--ease-out-expo);
+  }
+  .skip-link:focus-visible {
+    translate: 1rem 1rem;
+  }
+
   /* Keyboard focus. The custom cursor hides the pointer, so this ring is the
      only positional feedback a keyboard user gets — it must never be removed.
      :focus-visible keeps it off mouse clicks. */

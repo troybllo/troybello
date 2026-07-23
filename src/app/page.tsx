@@ -26,7 +26,7 @@ export default function Home() {
       <MobileMenu />
       <AboutDrawer />
       <SectionCounter />
-      <main>
+      <main id="main">
         <Hero />
         <WordMarquee />
         <Manifesto />

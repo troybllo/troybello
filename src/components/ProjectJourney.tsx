@@ -13,7 +13,8 @@ const steps = [
     n: "02",
     title: "We design the experience",
     desc: "With the narrative locked, I design and build a site that feels premium, signals credibility, and gives your audience a reason to act.",
-    image: "/media/journey-2.gif",
+    image: "/media/journey/02.mp4",
+    poster: "/media/journey/02-poster.jpg",
   },
   {
     n: "03",
