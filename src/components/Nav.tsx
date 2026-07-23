@@ -4,7 +4,7 @@ import { AudioToggle } from "@/components/AudioToggle";
 import { openAbout } from "@/lib/about";
 
 const links = [
-  ["Work", "#work"],
+  ["Work", "/work"],
   ["Services", "#services"],
   ["Process", "#process"],
 ] as const;

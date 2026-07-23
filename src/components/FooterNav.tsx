@@ -5,7 +5,7 @@ import { Kicker } from "@/components/Kicker";
 import { openAbout } from "@/lib/about";
 
 const navLinks = [
-  ["Work", "#work"],
+  ["Work", "/work"],
   ["Services", "#services"],
   ["Process", "#process"],
   ["Contact", "#contact"],

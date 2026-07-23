@@ -6,7 +6,7 @@ import { openAbout } from "@/lib/about";
 import { getLenis } from "@/lib/lenis";
 
 const links = [
-  ["Work", "#work"],
+  ["Work", "/work"],
   ["Services", "#services"],
   ["Process", "#process"],
   ["Contact", "#contact"],

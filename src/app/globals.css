@@ -33,6 +33,8 @@
   --ph-bg: #121110;
   --ph-stripe: rgba(232, 232, 227, 0.08);
   --focus-ring: var(--greige-100);
+  /* column gutter on /work, matching the services rhythm */
+  --work-gutter: clamp(40px, 4vw, 100px);
   /* Services type beside the preview column (>=1600px). Narrower track than
      the stacked layout, so a shallower vw curve — but a higher cap, so wide
      screens end up with LARGER type than the stacked size, not smaller. */
