@@ -274,9 +274,8 @@
     translate: 1rem 1rem;
   }
 
-  /* Keyboard focus. The custom cursor hides the pointer, so this ring is the
-     only positional feedback a keyboard user gets — it must never be removed.
-     :focus-visible keeps it off mouse clicks. */
+  /* Keyboard focus — the only positional feedback a keyboard user gets, so it
+     must never be removed. :focus-visible keeps it off mouse clicks. */
   :focus-visible {
     outline: 2px solid var(--focus-ring);
     outline-offset: 3px;

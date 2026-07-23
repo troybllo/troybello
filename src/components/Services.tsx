@@ -36,7 +36,7 @@ const services = [
   },
   {
     title: "3D Development",
-    desc: "Post-launch support, docs, and training so your team can run the site with confidence.",
+    desc: "Real-time 3D and WebGL scenes that make a product tangible before anyone has read a word.",
     image: "/media/svc-3d.jpg",
   },
 ];
@@ -100,7 +100,7 @@ export function Services() {
             </p>
             <div className="mt-8 flex items-center gap-3.5">
               <Media
-                src="/media/faq-troy.jpg"
+                src="/media/avatar-troy.jpg"
                 alt=""
                 aspect="1/1"
                 radius="none"

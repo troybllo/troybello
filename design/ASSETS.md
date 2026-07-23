@@ -59,7 +59,7 @@ Six images. Only one is visible at a time — it swaps as you hover each row.
 | Website Strategy | `public/media/svc-strategy.jpg` | 3:4 | 720 × 960 |
 | Design Systems | `public/media/svc-systems.jpg` | 3:4 | 720 × 960 |
 | Shipping & Launch | `public/media/svc-launch.jpg` | 3:4 | 720 × 960 |
-| Care & Support | `public/media/svc-3d.jpg` | 3:4 | 720 × 960 |
+| 3D Development | `public/media/svc-3d.jpg` | 3:4 | 720 × 960 |
 
 Overwrite in place, keep the names, done.
 
@@ -79,7 +79,7 @@ worth keeping in mind when picking.
 | Step | File | Suits |
 |---|---|---|
 | 01 · We discover your story | `public/media/journey/01.mp4` (+ `01-poster.jpg`) | research, notes, whiteboard, early sketching |
-| 02 · We design the experience | `public/media/journey-2.gif` | design in progress — Figma, wireframes, type studies |
+| 02 · We design the experience | `public/media/journey/02.mp4` (+ `02-poster.jpg`) | design in progress — Figma, wireframes, type studies |
 | 03 · We ship it into the world | `public/media/journey-3.png` | the launched result — live site, device shot |
 
 Each step takes an image, a GIF, or a video — `Media` branches on the file
@@ -92,7 +92,8 @@ image optimizer would otherwise flatten them to one frame.
 |---|---|---|---|
 | Contact CTA background | `public/media/contact-reel.jpg` | wide, full-bleed | **2400 × 1350** |
 | FAQ portrait | `public/media/faq-troy.jpg` | **1:1 square** | **440 × 440** |
-| About drawer portrait | `public/media/about-portrait.jpg` | **16:10** | **1280 × 800** |
+| Quote avatar (head crop) | `public/media/avatar-troy.jpg` | **1:1 square** | **400 × 400** |
+| About drawer portrait | `public/media/about-portrait.jpg` | **4:5 portrait** | **1280 × 1600** |
 | Success Stories backdrops ×3 | `public/media/work-align.jpg`, `-rightfuture`, `-metalab` | **3:2** | **1800 × 1200** |
 
 The contact CTA sits under a 60% black scrim with text over it — pick something
@@ -103,9 +104,9 @@ dark and low-contrast, or it will fight the copy.
 
 ### Not yet wired
 
-The two small circular avatars — the testimonial in Services and the one in
-Manifesto — are striped placeholders with no image support in the code. They
-need a small code change, not just a file. Ask when you have headshots.
+The circular avatar in Manifesto is still a striped placeholder with no image
+support in the code — it needs a small code change, not just a file. The
+Services one now uses `avatar-troy.jpg`.
 
 ---
 

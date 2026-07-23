@@ -1,7 +1,6 @@
 import { AboutDrawer } from "@/components/AboutDrawer";
 import { CloseTheGap } from "@/components/CloseTheGap";
 import { ContactCta } from "@/components/ContactCta";
-import { Cursor } from "@/components/Cursor";
 import { Faq } from "@/components/Faq";
 import { Footer } from "@/components/Footer";
 import { FooterNav } from "@/components/FooterNav";
@@ -21,7 +20,6 @@ export default function Home() {
   return (
     <>
       <Preloader />
-      <Cursor />
       <Nav />
       <MobileMenu />
       <AboutDrawer />

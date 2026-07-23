@@ -16,7 +16,7 @@ const archivo = Archivo({
   display: "swap",
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://troybello.com";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://bllo.vercel.app";
 const title = "Troy Bello® — Freelance web design & development";
 const description =
   "I build change-making websites that finally match what you've actually built — for founders whose ambition has outgrown their presence.";

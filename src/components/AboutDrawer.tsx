@@ -166,7 +166,9 @@ export function AboutDrawer() {
           <Media
             src="/media/about-portrait.jpg"
             alt="Troy Bello"
-            aspect="16/10"
+            /* The portrait is a 4:5-ish source; a landscape frame here cropped
+               60% of it away. */
+            aspect="4/5"
             radius="none"
             className="w-full"
             sizes="(min-width: 640px) 640px, 100vw"
