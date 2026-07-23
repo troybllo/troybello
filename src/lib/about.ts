@@ -44,7 +44,7 @@ export const ABOUT_LINKS = [
   { label: "Email", href: "mailto:troybello25@gmail.com" },
   { label: "LinkedIn", href: "https://www.linkedin.com/in/troybello/" },
   { label: "GitHub", href: "https://github.com/troybllo" },
-  // TODO: add the Fiverr profile URL — the FAQ pricing answer points at it.
+  { label: "Fiverr", href: "https://www.fiverr.com/troybello/build-a-full-stack-saas-web-application-for-your-business" },
 ] as const;
 
 export const ABOUT_AVAILABILITY = "Booking projects for Q4 '26";

@@ -59,7 +59,7 @@ Six images. Only one is visible at a time — it swaps as you hover each row.
 | Website Strategy | `public/media/svc-strategy.jpg` | 3:4 | 720 × 960 |
 | Design Systems | `public/media/svc-systems.jpg` | 3:4 | 720 × 960 |
 | Shipping & Launch | `public/media/svc-launch.jpg` | 3:4 | 720 × 960 |
-| Care & Support | `public/media/svc-support.jpg` | 3:4 | 720 × 960 |
+| Care & Support | `public/media/svc-3d.jpg` | 3:4 | 720 × 960 |
 
 Overwrite in place, keep the names, done.
 
@@ -78,9 +78,13 @@ worth keeping in mind when picking.
 
 | Step | File | Suits |
 |---|---|---|
-| 01 · We discover your story | `public/media/journey-1.jpg` | research, notes, whiteboard, early sketching |
-| 02 · We design the experience | `public/media/journey-2.jpg` | design in progress — Figma, wireframes, type studies |
-| 03 · We ship it into the world | `public/media/journey-3.jpg` | the launched result — live site, device shot |
+| 01 · We discover your story | `public/media/journey/01.mp4` (+ `01-poster.jpg`) | research, notes, whiteboard, early sketching |
+| 02 · We design the experience | `public/media/journey-2.gif` | design in progress — Figma, wireframes, type studies |
+| 03 · We ship it into the world | `public/media/journey-3.png` | the launched result — live site, device shot |
+
+Each step takes an image, a GIF, or a video — `Media` branches on the file
+extension. Animated GIFs are served unoptimized so they keep animating; Next's
+image optimizer would otherwise flatten them to one frame.
 
 ### The rest
 
@@ -117,14 +121,21 @@ ffmpeg -i source.mp4 -an -vf "scale=1600:-2,fps=30" \
   -movflags +faststart out.mp4
 ```
 
+**Pick the CRF for the content.** 26 is right for photographic footage. Screen
+recordings — UI, text, sharp edges — smear badly at 26; use **20** for those.
+Drop `scale=` entirely if the source is already at or below 1600px wide, since
+upscaling in the encoder adds nothing but bitrate.
+
 Then pull a poster frame so there's no black box while it loads:
 
 ```sh
 ffmpeg -ss 0.5 -i out.mp4 -frames:v 1 -q:v 4 poster.jpg
 ```
 
-Keep the 4K masters **outside** `public/` — anything in `public/` ships to
-visitors whether it's referenced or not.
+Keep the 4K masters in **`assets-src/`** at the repo root. It is gitignored, so
+they never reach git or Vercel — anything in `public/` ships to visitors whether
+it is referenced or not, and these files were briefly committed before being
+purged from history. Only web encodes belong under `public/media/`.
 
 ---
 

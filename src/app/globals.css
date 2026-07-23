@@ -401,13 +401,38 @@
   opacity: 1;
   transform: none;
 }
-.story-url {
+/* cursor cue: the chip that trails the pointer (see CursorCue). It is portalled
+   to <body> and sits on a fixed layer, so `translate` here is what parks it
+   below-left of the pointer. Using the individual `translate`/`scale`
+   properties keeps the offset and the enter animation from fighting over
+   `transform`, which the wrapper owns. */
+.cursor-cue {
+  display: block;
+  translate: -100% 12px;
+  scale: 0.9;
   opacity: 0;
-  transition: opacity var(--dur-fast) var(--ease-out-expo);
+  transform-origin: top right;
+  transition:
+    opacity var(--dur-fast) var(--ease-out-expo),
+    scale var(--dur-fast) var(--ease-out-expo);
 }
-.story-frame:hover .story-url,
-.story-frame:focus-visible .story-url {
+.cursor-cue.in {
+  scale: 1;
   opacity: 1;
+}
+/* the arrow leans out as the chip lands */
+.cursor-cue-arrow {
+  display: inline-block;
+  transition: translate var(--dur-normal) var(--ease-out-expo);
+}
+.cursor-cue.in .cursor-cue-arrow {
+  translate: 2px -2px;
+}
+
+/* the case-study frame is a link — keyboard users need the target too */
+.story-frame:focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 3px;
 }
 
 /* masked line reveal */

@@ -29,7 +29,6 @@ const faqs = [
   },
   {
     q: "What's the investment?",
-    // TODO: link the Fiverr profile here once the URL is confirmed.
     a: "Every package and price is listed openly on my Fiverr profile — no discovery call required to find out what something costs. Larger or custom builds get a fixed, tailored quote before we begin.",
   },
 ];

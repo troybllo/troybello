@@ -23,7 +23,7 @@ Services · ProjectJourney · Faq · ContactCta · FooterNav ] · Footer
 - Token layer in `globals.css` (`:root` vars + `@theme`) — colors, type scale,
   spacing, radii, motion; dark default theme + `.theme-light` for the work grid
 - Shared primitives: Section, Reveal, LineReveal (both via `useInViewOnce`),
-  Kicker, Media, MediaCycle, StoryFrame, MarqueeTrack, SwitcherRail,
+  Kicker, Media, MediaCycle, StoryFrame, CursorCue, MarqueeTrack, SwitcherRail,
   HalftoneCanvas
 - `MediaCycle` cross-fades stills on a 1s beat (pauses off-screen, on hidden
   tab, and under reduced motion). Pass `video="…"` to swap the whole cycler for
@@ -37,8 +37,9 @@ Services · ProjectJourney · Faq · ContactCta · FooterNav ] · Footer
 - Metadata + OpenGraph + Twitter card; generated `opengraph-image`, branded
   `icon.svg`, `robots.txt`, `sitemap.xml`
 - `NEXT_PUBLIC_SITE_URL` env var drives canonical URLs
-- Imagery: grayscale placeholders in `public/media`, wired through `<Media>` —
-  swap files or the `image` fields for real assets, no code changes
+- Imagery in `public/media`, wired through `<Media>` / `<MediaCycle>` — swap
+  files or the `image` fields for real assets, no code changes. 4K masters live
+  in the gitignored `assets-src/`; see `design/ASSETS.md`
 
 ## In review
 
@@ -46,8 +47,8 @@ Services · ProjectJourney · Faq · ContactCta · FooterNav ] · Footer
   a backdrop still: entering view dims the still to 45% and fades/scales the
   inset in, then the site cycles. Per story, pass either `frames` (cross-faded
   screens) or `video` (a looping reel); add `href` to make the pane a link with
-  a hover URL chip. States live in `globals.css` under `.story-frame`. Currently
-  wired to the three client reels
+  a cursor-following "Visit …" cue. States live in `globals.css` under
+  `.story-frame` / `.cursor-cue`. Wired to the three live client sites
 - About drawer — expanded to a 3-paragraph bio, stats row, contact links, and
   an availability line. Compare against the reference screenshot
 - CloseTheGap scroll-grow retuned (scale 0.38 → 2.2 across the section's full
@@ -55,17 +56,14 @@ Services · ProjectJourney · Faq · ContactCta · FooterNav ] · Footer
 
 ## Remaining (optional)
 
-- Real assets (hero reel, case studies, portrait, step visuals, brand logos) —
-  including `/media/closegap.mp4` for the CloseTheGap frame
-- Success Stories backdrops — the panes still use the old `work-*.jpg`
-  placeholders behind the reels. Real backdrops go in
-  `public/media/work/<slug>/still.jpg` (landscape, ≥1800px wide)
-- The 4K source recordings (`public/media/work-*.mp4`, 92MB) are only kept as
-  masters — they are NOT referenced by the site and should move out of
-  `public/` before this ships. Re-encode with:
-  `ffmpeg -i src.mp4 -an -vf "scale=1600:-2,fps=30" -c:v libx264 -crf 26 \
-   -preset slow -pix_fmt yuv420p -movflags +faststart out.mp4`
-- Live URLs for Align / RightFuture / Metalab → the `href` on each story
+- Real assets still on placeholders: contact CTA, FAQ portrait, about portrait,
+  the six `gap-*.jpg` frames, and the two circular testimonial avatars (the
+  avatars need a code change, not just files)
+- `gap-4.jpg` is landscape (1.40) in the 3:4 gap frame — 46% cropped and soft
+- Process step 01/02 media is low-res: `journey/01.mp4` is 854×480 and
+  pillarboxed to a real 482×480; `journey-2.gif` is 720×560. Both are upscaled
+  ~2× in a frame that renders ~1440px. Re-capture with a screen recorder
+  rather than a phone pointed at a monitor
 - Licensed Animo/KH Teka woff2 to replace the Archivo stand-in, if bought
 - Deeper a11y sweep (focus-visible styles, screen-reader pass on drawer/nav)
 - Tablet-breakpoint QA

@@ -1,8 +1,8 @@
 import { HalftoneCanvas } from "@/components/HalftoneCanvas";
-import { HoldToDisrupt } from "@/components/HoldToDisrupt";
+import { CursorCue } from "@/components/CursorCue";
 
 // The canvas amplifies its field on pointer-down, so pressing the band
-// "disrupts" it — the HoldToDisrupt chip is the affordance for that.
+// "disrupts" it — the cue chip is the affordance for that.
 export function Footer() {
   return (
     <footer className="relative h-[45vh] min-h-[320px] overflow-hidden">
@@ -12,7 +12,7 @@ export function Footer() {
         className="absolute inset-0 size-full"
       />
 
-      <HoldToDisrupt />
+      <CursorCue label="Hold to disrupt" rest="center" />
 
       <div className="pointer-events-none absolute inset-x-0 bottom-8 flex items-center justify-between px-(--space-inline)">
         <span className="font-mono text-[14px] font-medium tracking-mono uppercase mix-blend-difference">

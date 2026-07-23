@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { CursorCue } from "@/components/CursorCue";
 import { MediaCycle } from "@/components/MediaCycle";
 import { useInViewOnce } from "@/hooks/useInViewOnce";
 
@@ -72,9 +73,15 @@ export function StoryFrame({
       )}
 
       {href && (
-        <span className="story-url absolute bottom-3.5 left-4 z-10 rounded-xs bg-black-950/70 px-2 py-1 font-mono text-mono-xs tracking-mono-md uppercase text-greige-100">
-          {hostname(href)}
-        </span>
+        <CursorCue
+          size="lg"
+          label={
+            <>
+              Visit {hostname(href)}{" "}
+              <span className="cursor-cue-arrow">↗</span>
+            </>
+          }
+        />
       )}
     </Tag>
   );

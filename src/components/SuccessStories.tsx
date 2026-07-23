@@ -9,13 +9,13 @@ import { pad2 } from "@/lib/motion";
 // other with no code change. Assets live in /public/media/work/<slug>/; the
 // reels there are web-encoded from the 4K source recordings in /public/media.
 // `insetAspect` matches each recording so object-cover never crops it.
-// TODO: fill in each `href` — panes without one render inert and hide the chip.
 // `metric` describes the scope of the work, not a performance claim. It replaced
 // three invented figures (58% / $2M+ / 3.1x). If real, verifiable results come
 // in, they belong here — otherwise leave these as scope descriptors.
 const stories = [
   {
     name: "Align",
+    href: "https://www.alignyourstars.com",
     desc: "Brand refresh and website for a team building calm, focused software for modern operators.",
     metric: "Design + Build",
     metricLabel: "Brand refresh and full site, designed and developed end to end",
@@ -26,6 +26,7 @@ const stories = [
   },
   {
     name: "RightFuture",
+    href: "https://r-ight-future.vercel.app/",
     desc: "Website and design system for a climate-forward venture studio backing the next wave of founders.",
     metric: "Design System",
     metricLabel: "Website plus a reusable component system built to grow with them",
@@ -36,6 +37,7 @@ const stories = [
   },
   {
     name: "Metalab",
+    href: "https://metalab-five.vercel.app/",
     desc: "End-to-end site and interaction design for a product studio shipping category-defining work.",
     metric: "End to End",
     metricLabel: "Site and interaction design, from first strategy call through launch",
@@ -64,6 +66,7 @@ export function SuccessStories() {
             >
               <StoryFrame
                 name={story.name}
+                href={story.href}
                 still={story.still}
                 video={story.video}
                 poster={story.poster}
