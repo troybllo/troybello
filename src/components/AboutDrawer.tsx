@@ -11,7 +11,11 @@ import {
   STATS,
 } from "@/lib/about";
 import { getLenis } from "@/lib/lenis";
-import { Media } from "@/components/Media";
+import { HalftoneCanvas } from "@/components/HalftoneCanvas";
+
+// Dusty rose against near-black — the one warm accent on an otherwise greige
+// site. Passed as a literal because the canvas parses hex, not CSS vars.
+const BLUSH = "#b5717a";
 
 export function AboutDrawer() {
   const [mounted, setMounted] = useState(false);
@@ -162,16 +166,26 @@ export function AboutDrawer() {
           </div>
         </div>
 
-        <div className="relative">
-          <Media
-            src="/media/about-portrait.jpg"
-            alt="Troy Bello"
-            /* The portrait is a 4:5-ish source; a landscape frame here cropped
-               60% of it away. */
-            aspect="4/5"
-            radius="none"
-            className="w-full"
-            sizes="(min-width: 640px) 640px, 100vw"
+        {/* Generative panel rather than a photo — a portrait never sat well in
+            a full-width band here. Falls back to the flat black block when
+            WebGL2 is missing or the user prefers reduced motion. */}
+        <div
+          className="grain relative overflow-hidden bg-black-950"
+          style={{ aspectRatio: "16/10" }}
+        >
+          <HalftoneCanvas
+            className="absolute inset-0 size-full"
+            bg="#080807"
+            fg={BLUSH}
+            pixelSize={3}
+            amplitude={2.4}
+            timeSpeed={0.009}
+            gooeyness={0.72}
+            contrast={1.9}
+            bias={-0.12}
+            invert={0}
+            waveAmplitude={0.55}
+            waveFrequency={6.2}
           />
           <span className="absolute top-6 left-6 text-[clamp(28px,3vw,44px)] font-medium text-greige-100 mix-blend-difference">
             listen
